@@ -57,9 +57,11 @@ android {
         kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
 
-    kotlinOptions {
-        freeCompilerArgs += "-Xcontext-receivers"
-        jvmTarget = "17"
+    kotlin {
+        compilerOptions {
+            freeCompilerArgs.add("-Xcontext-receivers")
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        }
     }
 }
 

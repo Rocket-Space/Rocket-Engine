@@ -17,12 +17,12 @@ tasks.register("clean", Delete::class) {
 
 subprojects {
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-        kotlinOptions {
+        compilerOptions {
             if (project.findProperty("enableComposeCompilerReports") == "true") {
                 arrayOf("reports", "metrics").forEach {
-                    freeCompilerArgs = freeCompilerArgs + listOf(
+                    freeCompilerArgs.addAll(listOf(
                         "-P", "plugin:androidx.compose.compiler.plugins.kotlin:${it}Destination=${project.buildDir.absolutePath}/compose_metrics"
-                    )
+                    ))
                 }
             }
         }
