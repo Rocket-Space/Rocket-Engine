@@ -49,5 +49,14 @@ data class Context(
                 platform = "TV"
             )
         )
+
+        val DefaultIOS = Context(
+            client = Client(
+                clientName = "IOS",
+                clientVersion = "19.29.1",
+                platform = "MOBILE",
+                userAgent = "com.google.ios.youtube/19.29.1 (iPhone; CPU iPhone OS 17_5_1 like Mac OS X)"
+            )
+        )
     }
 }
