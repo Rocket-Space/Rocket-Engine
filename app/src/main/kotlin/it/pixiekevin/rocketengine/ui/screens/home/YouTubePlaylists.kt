@@ -120,15 +120,18 @@ fun YouTubePlaylists(
             items = playlists!!,
             key = { it.id }
         ) { playlist ->
-            PlaylistItem(
-                thumbnailUrl = playlist.snippet.thumbnails?.default?.url,
-                songCount = playlist.contentDetails?.itemCount?.toInt(),
-                name = playlist.snippet.title,
-                channelName = null,
-                thumbnailSizePx = 200,
-                thumbnailSizeDp = 60.dp,
+            androidx.compose.foundation.clickable(
                 onClick = { onPlaylistClick(playlist.id) }
-            )
+            ) {
+                PlaylistItem(
+                    thumbnailUrl = playlist.snippet.thumbnails?.default?.url,
+                    songCount = playlist.contentDetails?.itemCount?.toInt(),
+                    name = playlist.snippet.title,
+                    channelName = null,
+                    thumbnailSizePx = 200,
+                    thumbnailSizeDp = 60.dp
+                )
+            }
         }
         
         item {
