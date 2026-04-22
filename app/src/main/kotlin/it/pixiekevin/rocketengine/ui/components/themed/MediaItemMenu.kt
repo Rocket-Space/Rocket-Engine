@@ -269,6 +269,7 @@ fun MediaItemMenu(
     onRemoveFromQuickPicks: (() -> Unit)? = null,
     onShare: () -> Unit
 ) {
+    val context = LocalContext.current
     val (colorPalette) = LocalAppearance.current
     val density = LocalDensity.current
 
@@ -516,7 +517,7 @@ fun MediaItemMenu(
 
                         it.pixiekevin.rocketengine.download.DownloadPath.entries.forEach { path ->
                             MenuEntry(
-                                icon = R.drawable.folder,
+                                icon = R.drawable.library,
                                 text = when (path) {
                                     it.pixiekevin.rocketengine.download.DownloadPath.CACHE -> "App cache"
                                     it.pixiekevin.rocketengine.download.DownloadPath.MUSIC -> "Music folder"
@@ -561,19 +562,18 @@ fun MediaItemMenu(
                 MenuEntry(
                     icon = R.drawable.download,
                     text = if (isDownloading) "Downloading..." else "Download",
-                    isEnabled = !isDownloading,
                     onClick = {
                         if (isDownloading) return@MenuEntry
-                        
+
                         if (downloadManager.getPromptForLocation()) {
                             isShowingLocationDialog = true
                         } else {
                             isDownloading = true
                             onDismiss()
-                            
+
                             val filename = "${mediaItem.mediaMetadata.title}_${mediaItem.mediaMetadata.artist}"
                                 .replaceInvalidChars()
-                            
+
                             kotlinx.coroutines.GlobalScope.launch(Dispatchers.IO) {
                                 downloadManager.downloadAudio(
                                     url = "https://music.youtube.com/watch?v=${mediaItem.mediaId}",

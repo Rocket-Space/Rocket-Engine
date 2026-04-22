@@ -20,7 +20,6 @@ import it.pixiekevin.rocketengine.LocalGoogleAuthManager
 import it.pixiekevin.rocketengine.R
 import it.pixiekevin.rocketengine.ui.components.themed.Header
 import it.pixiekevin.rocketengine.ui.components.themed.IconButton
-import it.pixiekevin.rocketengine.ui.components.themed.NonQueuedSongList
 import it.pixiekevin.rocketengine.ui.items.PlaylistItem
 import it.pixiekevin.rocketengine.youtube.YouTubePlaylistManager
 import kotlinx.coroutines.launch
@@ -32,14 +31,16 @@ fun YouTubePlaylists(
     onPlaylistClick: (String) -> Unit,
     onSearchClick: () -> Unit
 ) {
+    val context = androidx.compose.ui.platform.LocalContext.current
     val googleAuthManager = LocalGoogleAuthManager.current
     val coroutineScope = rememberCoroutineScope()
-    
+    val (colorPalette, typography) = it.pixiekevin.rocketengine.ui.styling.LocalAppearance.current
+
     var playlists by remember { mutableStateOf<List<Playlist>?>(null) }
     var isLoading by remember { mutableStateOf(false) }
     var error by remember { mutableStateOf<String?>(null) }
 
-    val playlistManager = remember { YouTubePlaylistManager(androidx.compose.ui.platform.LocalContext.current, googleAuthManager) }
+    val playlistManager = remember { YouTubePlaylistManager(context, googleAuthManager) }
 
     LaunchedEffect(googleAuthManager.isSignedIn()) {
         if (googleAuthManager.isSignedIn()) {
@@ -63,8 +64,8 @@ fun YouTubePlaylists(
         ) {
             androidx.compose.foundation.text.BasicText(
                 text = "Sign in to your Google account to view your YouTube playlists",
-                style = it.pixiekevin.rocketengine.ui.styling.LocalAppearance.current.typography.xs.semiBold.copy(
-                    color = it.pixiekevin.rocketengine.ui.styling.LocalAppearance.current.colorPalette.textSecondary
+                style = typography.xs.semiBold.copy(
+                    color = colorPalette.textSecondary
                 )
             )
         }
@@ -77,8 +78,8 @@ fun YouTubePlaylists(
         ) {
             androidx.compose.foundation.text.BasicText(
                 text = "Loading playlists...",
-                style = it.pixiekevin.rocketengine.ui.styling.LocalAppearance.current.typography.xs.semiBold.copy(
-                    color = it.pixiekevin.rocketengine.ui.styling.LocalAppearance.current.colorPalette.textSecondary
+                style = typography.xs.semiBold.copy(
+                    color = colorPalette.textSecondary
                 )
             )
         }
@@ -91,8 +92,8 @@ fun YouTubePlaylists(
         ) {
             androidx.compose.foundation.text.BasicText(
                 text = "Error: $error",
-                style = it.pixiekevin.rocketengine.ui.styling.LocalAppearance.current.typography.xs.semiBold.copy(
-                    color = it.pixiekevin.rocketengine.ui.styling.LocalAppearance.current.colorPalette.red
+                style = typography.xs.semiBold.copy(
+                    color = colorPalette.red
                 )
             )
         }
@@ -105,8 +106,8 @@ fun YouTubePlaylists(
         ) {
             androidx.compose.foundation.text.BasicText(
                 text = "No playlists found",
-                style = it.pixiekevin.rocketengine.ui.styling.LocalAppearance.current.typography.xs.semiBold.copy(
-                    color = it.pixiekevin.rocketengine.ui.styling.LocalAppearance.current.colorPalette.textSecondary
+                style = typography.xs.semiBold.copy(
+                    color = colorPalette.textSecondary
                 )
             )
         }
@@ -120,10 +121,9 @@ fun YouTubePlaylists(
         ) { playlist ->
             PlaylistItem(
                 playlist = it.pixiekevin.rocketengine.models.Playlist(
-                    id = playlist.id,
+                    id = playlist.id.toLong(),
                     name = playlist.snippet.title,
-                    thumbnailUrl = playlist.snippet.thumbnails?.default?.url,
-                    songCount = playlist.contentDetails?.itemCount?.toInt()
+                    songCount = playlist.contentDetails?.itemCount?.toInt() ?: 0
                 ),
                 onClick = { onPlaylistClick(playlist.id) }
             )

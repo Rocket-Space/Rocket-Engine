@@ -18,11 +18,8 @@ class GoogleAuthManager(context: Context) {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestEmail()
             .requestProfile()
-            .requestScopes(
-                com.google.android.gms.auth.api.signin.GoogleSignInOptions.DEFAULT_SIGN_IN.getScopes()
-            )
             .build()
-        
+
         GoogleSignIn.getClient(context, gso)
     }
 

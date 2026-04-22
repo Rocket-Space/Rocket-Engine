@@ -29,10 +29,10 @@ class YouTubePlaylistManager(
 
             youtubeService = YouTube.Builder(
                 com.google.api.client.http.javanet.NetHttpTransport(),
-                com.google.api.client.json.jackson2.JacksonFactory.getDefaultInstance(),
+                com.google.api.client.json.gson.GsonFactory.getDefaultInstance(),
                 credential
             )
-                .setApplicationName("ViMusic")
+                .setApplicationName("Rocket Engine")
                 .build()
 
             return@withContext true
@@ -52,7 +52,7 @@ class YouTubePlaylistManager(
             }
 
             val response: PlaylistListResponse = youtubeService!!.playlists()
-                .list("snippet,contentDetails")
+                .list(listOf("snippet", "contentDetails"))
                 .setMine(true)
                 .setMaxResults(50L)
                 .execute()
@@ -74,7 +74,7 @@ class YouTubePlaylistManager(
             }
 
             val response: PlaylistListResponse = youtubeService!!.playlists()
-                .list("snippet,contentDetails")
+                .list(listOf("snippet", "contentDetails"))
                 .setId(playlistId)
                 .execute()
 
