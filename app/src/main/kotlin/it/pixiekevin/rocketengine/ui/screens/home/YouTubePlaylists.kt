@@ -2,6 +2,7 @@ package it.pixiekevin.rocketengine.ui.screens.home
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -120,18 +121,15 @@ fun YouTubePlaylists(
             items = playlists!!,
             key = { it.id }
         ) { playlist ->
-            androidx.compose.foundation.clickable(
-                onClick = { onPlaylistClick(playlist.id) }
-            ) {
-                PlaylistItem(
-                    thumbnailUrl = playlist.snippet.thumbnails?.default?.url,
-                    songCount = playlist.contentDetails?.itemCount?.toInt(),
-                    name = playlist.snippet.title,
-                    channelName = null,
-                    thumbnailSizePx = 200,
-                    thumbnailSizeDp = 60.dp
-                )
-            }
+            PlaylistItem(
+                thumbnailUrl = playlist.snippet.thumbnails?.default?.url,
+                songCount = playlist.contentDetails?.itemCount?.toInt(),
+                name = playlist.snippet.title,
+                channelName = null,
+                thumbnailSizePx = 200,
+                thumbnailSizeDp = 60.dp,
+                modifier = Modifier.clickable { onPlaylistClick(playlist.id) }
+            )
         }
         
         item {
