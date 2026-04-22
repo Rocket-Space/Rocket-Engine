@@ -16,9 +16,9 @@ dependencyResolutionManagement {
 
             library("kotlin-coroutines","org.jetbrains.kotlinx", "kotlinx-coroutines-core").version("1.8.0")
 
-            version("compose-compiler", "1.5.13")
+            version("compose-compiler", "1.5.8")
 
-            version("compose", "1.6.4")
+            version("compose", "1.5.4")
             library("compose-foundation", "androidx.compose.foundation", "foundation").versionRef("compose")
             library("compose-ui", "androidx.compose.ui", "ui").versionRef("compose")
             library("compose-ui-util", "androidx.compose.ui", "ui-util").versionRef("compose")
@@ -26,7 +26,7 @@ dependencyResolutionManagement {
 
             library("compose-shimmer", "com.valentinilk.shimmer", "compose-shimmer").version("1.2.0")
 
-            library("compose-activity", "androidx.activity", "activity-compose").version("1.8.2")
+            library("compose-activity", "androidx.activity", "activity-compose").version("1.8.1")
 
             library("compose-coil", "io.coil-kt", "coil-compose").version("2.6.0")
 
