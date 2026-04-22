@@ -318,8 +318,8 @@ fun MediaItemMenu(
             val slideDirection =
                 if (targetState) AnimatedContentTransitionScope.SlideDirection.Left else AnimatedContentTransitionScope.SlideDirection.Right
 
-            slideIntoContainer(slideDirection, animationSpec) with
-                    slideOutOfContainer(slideDirection, animationSpec)
+            slideIntoContainer(slideDirection, animationSpec).togetherWith(
+                    slideOutOfContainer(slideDirection, animationSpec))
         }
     ) { currentIsViewingPlaylists ->
         if (currentIsViewingPlaylists) {

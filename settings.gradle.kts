@@ -66,7 +66,7 @@ library("google-http-client-gson", "com.google.http-client", "google-http-client
     }
 }
 
-rootProject.name = "Rocket Engine"
+rootProject.name = "Rocket-Engine"
 include(":app")
 include(":compose-routing")
 include(":compose-reordering")
