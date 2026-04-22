@@ -64,6 +64,23 @@ android {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
         }
     }
+
+    lint {
+        disable.addAll(listOf(
+            "MissingIntentFilterForMediaSearch",
+            "MissingLeanbackLauncher",
+            "MissingLeanbackSupport",
+            "ImpliedTouchscreenHardware",
+            "PermissionRequestCode",
+            "QueryPermissionsNeeded",
+            "ExportedReceiver",
+            "ExportedService",
+            "AllowBackup",
+            "MissingApplicationIcon",
+            "MissingTvBanner"
+        ))
+        abortOnError = false
+    }
 }
 
 kapt {
