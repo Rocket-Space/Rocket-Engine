@@ -27,15 +27,12 @@ jobs:
 
       - name: Run lint
         run: ./gradlew lintDebug
-        continue-on-error: true
 
       - name: Build debug APK
         run: ./gradlew assembleDebug
-        continue-on-error: true
 
       - name: Build release APK
         run: ./gradlew assembleRelease
-        continue-on-error: true
 
       - name: Upload debug APK
         uses: actions/upload-artifact@v4
