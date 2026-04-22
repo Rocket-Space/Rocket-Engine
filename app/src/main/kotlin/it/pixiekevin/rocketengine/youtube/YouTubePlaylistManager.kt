@@ -75,7 +75,7 @@ class YouTubePlaylistManager(
 
             val response: PlaylistListResponse = youtubeService!!.playlists()
                 .list(listOf("snippet", "contentDetails"))
-                .setId(playlistId)
+                .setId(listOf(playlistId))
                 .execute()
 
             val playlist = response.items?.firstOrNull()

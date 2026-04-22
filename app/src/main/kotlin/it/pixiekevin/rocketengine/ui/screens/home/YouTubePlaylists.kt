@@ -22,6 +22,7 @@ import it.pixiekevin.rocketengine.ui.components.themed.Header
 import it.pixiekevin.rocketengine.ui.components.themed.IconButton
 import it.pixiekevin.rocketengine.ui.items.PlaylistItem
 import it.pixiekevin.rocketengine.youtube.YouTubePlaylistManager
+import it.pixiekevin.rocketengine.utils.semiBold
 import kotlinx.coroutines.launch
 
 @ExperimentalFoundationApi
@@ -120,11 +121,12 @@ fun YouTubePlaylists(
             key = { it.id }
         ) { playlist ->
             PlaylistItem(
-                playlist = it.pixiekevin.rocketengine.models.Playlist(
-                    id = playlist.id.toLong(),
-                    name = playlist.snippet.title,
-                    songCount = playlist.contentDetails?.itemCount?.toInt() ?: 0
-                ),
+                thumbnailUrl = playlist.snippet.thumbnails?.default?.url,
+                songCount = playlist.contentDetails?.itemCount?.toInt(),
+                name = playlist.snippet.title,
+                channelName = null,
+                thumbnailSizePx = 200,
+                thumbnailSizeDp = 60.dp,
                 onClick = { onPlaylistClick(playlist.id) }
             )
         }
