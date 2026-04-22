@@ -2,7 +2,6 @@ package it.pixiekevin.rocketengine.models
 
 import androidx.compose.runtime.Immutable
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Immutable
@@ -10,5 +9,5 @@ import androidx.room.PrimaryKey
 data class Playlist(
     @PrimaryKey(autoGenerate = true) val id: Long = 0,
     val name: String,
-    @Ignore val browseId: String? = null
+    val browseId: String? = null
 )
