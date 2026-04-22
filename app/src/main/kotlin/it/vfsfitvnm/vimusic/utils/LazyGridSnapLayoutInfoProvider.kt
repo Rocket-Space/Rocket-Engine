@@ -37,11 +37,7 @@ fun SnapLayoutInfoProvider(
     private val layoutInfo: LazyGridLayoutInfo
         get() = lazyGridState.layoutInfo
 
-    override fun Density.calculateSnappingOffset(
-        currentVelocity: Float,
-        decayAnimationSpec: androidx.compose.animation.core.DecayAnimationSpec<Float>,
-        snapAnimationSpec: androidx.compose.animation.core.AnimationSpec<Float>
-    ): Float {
+    override fun Density.calculateSnappingOffset(currentVelocity: Float): Float {
         var lowerBoundOffset = Float.NEGATIVE_INFINITY
         var upperBoundOffset = Float.POSITIVE_INFINITY
 
@@ -72,11 +68,12 @@ fun SnapLayoutInfoProvider(
         }
     }
 
-    override fun Density.calculateSnapStepSize(): Float = with(layoutInfo) {
-        if (visibleItemsInfo.isNotEmpty()) {
-            visibleItemsInfo.fastSumBy { it.size.width } / visibleItemsInfo.size.toFloat()
-        } else {
-            0f
+    override val Density.snapStepSize: Float
+        get() = with(layoutInfo) {
+            if (visibleItemsInfo.isNotEmpty()) {
+                visibleItemsInfo.fastSumBy { it.size.width } / visibleItemsInfo.size.toFloat()
+            } else {
+                0f
+            }
         }
-    }
 }

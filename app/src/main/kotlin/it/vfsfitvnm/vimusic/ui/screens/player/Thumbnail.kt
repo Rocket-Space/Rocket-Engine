@@ -3,7 +3,6 @@ package it.vfsfitvnm.vimusic.ui.screens.player
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.SlideDirection
 import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -92,7 +91,7 @@ fun Thumbnail(
         transitionSpec = {
             val duration = 500
             val slideDirection =
-                if (targetState.firstPeriodIndex > initialState.firstPeriodIndex) SlideDirection.Left else SlideDirection.Right
+                if (targetState.firstPeriodIndex > initialState.firstPeriodIndex) AnimatedContentTransitionScope.SlideDirection.Left else AnimatedContentTransitionScope.SlideDirection.Right
 
             ContentTransform(
                 targetContentEnter = slideIntoContainer(

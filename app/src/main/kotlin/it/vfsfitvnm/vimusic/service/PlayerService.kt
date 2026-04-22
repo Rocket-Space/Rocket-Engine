@@ -845,7 +845,6 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
         val audioSink = DefaultAudioSink.Builder()
             .setEnableFloatOutput(false)
             .setEnableAudioTrackPlaybackParams(false)
-            .setOffloadEnabled(false)
             .setAudioProcessorChain(
                 DefaultAudioProcessorChain(
                     emptyArray(),
@@ -858,11 +857,12 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
         return RenderersFactory { handler: Handler?, _, audioListener: AudioRendererEventListener?, _, _ ->
             arrayOf(
                 MediaCodecAudioRenderer(
-                    this,
-                    MediaCodecSelector.DEFAULT,
-                    handler!!,
-                    audioListener!!,
-                    audioSink
+                    context = this,
+                    mediaCodecSelector = MediaCodecSelector.DEFAULT,
+                    handler = handler!!,
+                    eventListener = audioListener!!,
+                    audioSink = audioSink,
+                    enableDecoderFallback = false
                 )
             )
         }

@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.SlideDirection
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.VisibilityThreshold
 import androidx.compose.animation.core.spring
@@ -48,8 +47,8 @@ fun Scaffold(
             targetState = tabIndex,
             transitionSpec = {
                 val slideDirection = when (targetState > initialState) {
-                    true -> SlideDirection.Up
-                    false -> SlideDirection.Down
+                    true -> AnimatedContentTransitionScope.SlideDirection.Up
+                    false -> AnimatedContentTransitionScope.SlideDirection.Down
                 }
 
                 val animationSpec = spring(

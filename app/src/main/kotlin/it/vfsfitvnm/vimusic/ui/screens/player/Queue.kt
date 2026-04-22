@@ -4,7 +4,6 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ContentTransform
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.SlideDirection
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
@@ -368,7 +367,7 @@ fun Queue(
                     AnimatedContent(
                         targetState = queueLoopEnabled,
                         transitionSpec = {
-                            val slideDirection = if (targetState) SlideDirection.Up else SlideDirection.Down
+                            val slideDirection = if (targetState) AnimatedContentTransitionScope.SlideDirection.Up else AnimatedContentTransitionScope.SlideDirection.Down
 
                             ContentTransform(
                                 targetContentEnter = slideIntoContainer(slideDirection) + fadeIn(),
