@@ -54,7 +54,6 @@ import it.pixiekevin.rocketengine.ui.components.ShimmerHost
 import it.pixiekevin.rocketengine.ui.components.themed.FloatingActionsContainerWithScrollToTop
 import it.pixiekevin.rocketengine.ui.components.themed.Header
 import it.pixiekevin.rocketengine.ui.components.themed.NonQueuedMediaItemMenu
-import it.pixiekevin.rocketengine.ui.components.themed.SecondaryButton
 import it.pixiekevin.rocketengine.ui.components.themed.TextPlaceholder
 import it.pixiekevin.rocketengine.ui.items.AlbumItem
 import it.pixiekevin.rocketengine.ui.items.AlbumItemPlaceholder
@@ -336,11 +335,12 @@ fun QuickPicks(
                         modifier = Modifier.padding(top = 8.dp)
                     )
                     androidx.compose.foundation.layout.Spacer(modifier = Modifier.height(16.dp))
-                    it.pixiekevin.rocketengine.ui.components.themed.SecondaryButton(
-                        text = "Retry",
-                        onClick = {
-                            relatedPageResult = null
-                        }
+                    BasicText(
+                        text = "Tap to retry",
+                        style = typography.m.semiBold.center,
+                        modifier = Modifier
+                            .clickable { relatedPageResult = null }
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
                     )
                 }
             } ?: ShimmerHost {
