@@ -37,10 +37,11 @@ fun SnapLayoutInfoProvider(
     private val layoutInfo: LazyGridLayoutInfo
         get() = lazyGridState.layoutInfo
 
-    // Single page snapping is the default
-    override fun Density.calculateApproachOffset(initialVelocity: Float): Float = 0f
-
-    override fun Density.calculateSnappingOffsetBounds(): ClosedFloatingPointRange<Float> {
+    override fun Density.calculateSnappingOffset(
+        currentVelocity: Float,
+        decayAnimationSpec: androidx.compose.animation.core.DecayAnimationSpec<Float>,
+        snapAnimationSpec: androidx.compose.animation.core.AnimationSpec<Float>
+    ): Float {
         var lowerBoundOffset = Float.NEGATIVE_INFINITY
         var upperBoundOffset = Float.POSITIVE_INFINITY
 
@@ -59,10 +60,19 @@ fun SnapLayoutInfoProvider(
             }
         }
 
-        return lowerBoundOffset.rangeTo(upperBoundOffset)
+        // Return the offset closest to zero (nearest item)
+        return when {
+            lowerBoundOffset == Float.NEGATIVE_INFINITY -> upperBoundOffset
+            upperBoundOffset == Float.POSITIVE_INFINITY -> lowerBoundOffset
+            else -> if (kotlin.math.abs(lowerBoundOffset) < kotlin.math.abs(upperBoundOffset)) {
+                lowerBoundOffset
+            } else {
+                upperBoundOffset
+            }
+        }
     }
 
-    override fun Density.snapStepSize(): Float = with(layoutInfo) {
+    override fun Density.calculateSnapStepSize(): Float = with(layoutInfo) {
         if (visibleItemsInfo.isNotEmpty()) {
             visibleItemsInfo.fastSumBy { it.size.width } / visibleItemsInfo.size.toFloat()
         } else {

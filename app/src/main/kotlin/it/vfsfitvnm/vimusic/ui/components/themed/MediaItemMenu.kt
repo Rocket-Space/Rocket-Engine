@@ -3,8 +3,9 @@ package it.vfsfitvnm.vimusic.ui.components.themed
 import android.content.Intent
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.SlideDirection
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.with
@@ -314,7 +315,7 @@ fun MediaItemMenu(
         transitionSpec = {
             val animationSpec = tween<IntOffset>(400)
             val slideDirection =
-                if (targetState) AnimatedContentScope.SlideDirection.Left else AnimatedContentScope.SlideDirection.Right
+                if (targetState) SlideDirection.Left else SlideDirection.Right
 
             slideIntoContainer(slideDirection, animationSpec) with
                     slideOutOfContainer(slideDirection, animationSpec)

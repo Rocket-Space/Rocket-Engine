@@ -619,7 +619,7 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
         }
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
         when (key) {
             persistentQueueKey -> isPersistentQueueEnabled =
                 sharedPreferences.getBoolean(key, isPersistentQueueEnabled)
@@ -845,7 +845,7 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
         val audioSink = DefaultAudioSink.Builder()
             .setEnableFloatOutput(false)
             .setEnableAudioTrackPlaybackParams(false)
-            .setOffloadMode(DefaultAudioSink.OFFLOAD_MODE_DISABLED)
+            .setOffloadEnabled(false)
             .setAudioProcessorChain(
                 DefaultAudioProcessorChain(
                     emptyArray(),
@@ -860,8 +860,8 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
                 MediaCodecAudioRenderer(
                     this,
                     MediaCodecSelector.DEFAULT,
-                    handler,
-                    audioListener,
+                    handler!!,
+                    audioListener!!,
                     audioSink
                 )
             )
