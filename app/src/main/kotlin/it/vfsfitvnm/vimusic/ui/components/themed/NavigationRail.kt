@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.components.themed
+package it.pixiekevin.rocketengine.ui.components.themed
 
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.animateFloat
@@ -16,7 +16,9 @@ import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
@@ -32,13 +34,13 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import it.vfsfitvnm.vimusic.LocalPlayerAwareWindowInsets
-import it.vfsfitvnm.vimusic.ui.styling.Dimensions
-import it.vfsfitvnm.vimusic.ui.styling.LocalAppearance
-import it.vfsfitvnm.vimusic.utils.center
-import it.vfsfitvnm.vimusic.utils.color
-import it.vfsfitvnm.vimusic.utils.isLandscape
-import it.vfsfitvnm.vimusic.utils.semiBold
+import it.pixiekevin.rocketengine.LocalPlayerAwareWindowInsets
+import it.pixiekevin.rocketengine.ui.styling.Dimensions
+import it.pixiekevin.rocketengine.ui.styling.LocalAppearance
+import it.pixiekevin.rocketengine.utils.center
+import it.pixiekevin.rocketengine.utils.color
+import it.pixiekevin.rocketengine.utils.isLandscape
+import it.pixiekevin.rocketengine.utils.semiBold
 
 @Composable
 inline fun NavigationRail(
@@ -54,20 +56,20 @@ inline fun NavigationRail(
     val isLandscape = isLandscape
 
     val paddingValues = LocalPlayerAwareWindowInsets.current
-        .only(WindowInsetsSides.Vertical + WindowInsetsSides.Start).asPaddingValues()
+        .only(WindowInsetsSides.Horizontal + WindowInsetsSides.Top).asPaddingValues()
 
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
-            .verticalScroll(rememberScrollState())
+            .horizontalScroll(rememberScrollState())
             .padding(paddingValues)
     ) {
         Box(
-            contentAlignment = Alignment.TopCenter,
+            contentAlignment = Alignment.CenterStart,
             modifier = Modifier
                 .size(
-                    width = if (isLandscape) Dimensions.navigationRailWidthLandscape else Dimensions.navigationRailWidth,
-                    height = Dimensions.headerHeight
+                    width = Dimensions.headerHeight,
+                    height = if (isLandscape) Dimensions.navigationRailWidthLandscape else Dimensions.navigationRailWidth
                 )
         ) {
             Image(
@@ -76,8 +78,8 @@ inline fun NavigationRail(
                 colorFilter = ColorFilter.tint(colorPalette.textSecondary),
                 modifier = Modifier
                     .offset(
-                        x = if (isLandscape) 0.dp else Dimensions.navigationRailIconOffset,
-                        y = 48.dp
+                        x = 48.dp,
+                        y = if (isLandscape) 0.dp else Dimensions.navigationRailIconOffset
                     )
                     .clip(CircleShape)
                     .clickable(onClick = onTopIconButtonClick)
@@ -86,10 +88,10 @@ inline fun NavigationRail(
             )
         }
 
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .width(if (isLandscape) Dimensions.navigationRailWidthLandscape else Dimensions.navigationRailWidth)
+                .height(if (isLandscape) Dimensions.navigationRailWidthLandscape else Dimensions.navigationRailWidth)
         ) {
             val transition = updateTransition(targetState = tabIndex, label = null)
 
@@ -108,11 +110,9 @@ inline fun NavigationRail(
                         contentDescription = null,
                         colorFilter = ColorFilter.tint(colorPalette.text),
                         modifier = Modifier
-                            .vertical(enabled = !isLandscape)
                             .graphicsLayer {
                                 alpha = dothAlpha
-                                translationX = (1f - dothAlpha) * -48.dp.toPx()
-                                rotationZ = if (isLandscape) 0f else -90f
+                                translationY = (1f - dothAlpha) * -48.dp.toPx()
                             }
                             .size(Dimensions.navigationRailIconOffset * 2)
                     )
@@ -123,8 +123,6 @@ inline fun NavigationRail(
                         text = text,
                         style = typography.xs.semiBold.center.color(textColor),
                         modifier = Modifier
-                            .vertical(enabled = !isLandscape)
-                            .rotate(if (isLandscape) 0f else -90f)
                             .padding(horizontal = 16.dp)
                     )
                 }
@@ -133,38 +131,15 @@ inline fun NavigationRail(
                     .clip(RoundedCornerShape(24.dp))
                     .clickable(onClick = { onTabIndexChanged(index) })
 
-                if (isLandscape) {
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = contentModifier
-                            .padding(vertical = 8.dp)
-                    ) {
-                        iconContent()
-                        textContent()
-                    }
-                } else {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = contentModifier
-                            .padding(horizontal = 8.dp)
-                    ) {
-                        iconContent()
-                        textContent()
-                    }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = contentModifier
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
+                ) {
+                    iconContent()
+                    textContent()
                 }
             }
         }
     }
 }
-
-fun Modifier.vertical(enabled: Boolean = true) =
-    if (enabled)
-        layout { measurable, constraints ->
-            val placeable = measurable.measure(constraints.copy(maxWidth = Int.MAX_VALUE))
-            layout(placeable.height, placeable.width) {
-                placeable.place(
-                    x = -(placeable.width / 2 - placeable.height / 2),
-                    y = -(placeable.height / 2 - placeable.width / 2)
-                )
-            }
-        } else this

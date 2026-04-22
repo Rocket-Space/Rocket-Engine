@@ -1,12 +1,12 @@
-package it.vfsfitvnm.innertube.requests
+package it.pixiekevin.innertube.requests
 
 import io.ktor.client.call.body
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
-import it.vfsfitvnm.innertube.Innertube
-import it.vfsfitvnm.innertube.models.SearchSuggestionsResponse
-import it.vfsfitvnm.innertube.models.bodies.SearchSuggestionsBody
-import it.vfsfitvnm.innertube.utils.runCatchingNonCancellable
+import it.pixiekevin.innertube.Innertube
+import it.pixiekevin.innertube.models.SearchSuggestionsResponse
+import it.pixiekevin.innertube.models.bodies.SearchSuggestionsBody
+import it.pixiekevin.innertube.utils.runCatchingNonCancellable
 
 suspend fun Innertube.searchSuggestions(body: SearchSuggestionsBody) = runCatchingNonCancellable {
     val response = client.post(searchSuggestions) {

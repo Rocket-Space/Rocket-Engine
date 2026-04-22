@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.service
+package it.pixiekevin.rocketengine.service
 
 import androidx.media3.common.PlaybackException
 

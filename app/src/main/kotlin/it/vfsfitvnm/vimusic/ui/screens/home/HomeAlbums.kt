@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.screens.home
+package it.pixiekevin.rocketengine.ui.screens.home
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.LinearEasing
@@ -26,23 +26,23 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
-import it.vfsfitvnm.compose.persist.persist
-import it.vfsfitvnm.vimusic.Database
-import it.vfsfitvnm.vimusic.LocalPlayerAwareWindowInsets
-import it.vfsfitvnm.vimusic.R
-import it.vfsfitvnm.vimusic.enums.AlbumSortBy
-import it.vfsfitvnm.vimusic.enums.SortOrder
-import it.vfsfitvnm.vimusic.models.Album
-import it.vfsfitvnm.vimusic.ui.components.themed.FloatingActionsContainerWithScrollToTop
-import it.vfsfitvnm.vimusic.ui.components.themed.Header
-import it.vfsfitvnm.vimusic.ui.components.themed.HeaderIconButton
-import it.vfsfitvnm.vimusic.ui.items.AlbumItem
-import it.vfsfitvnm.vimusic.ui.styling.Dimensions
-import it.vfsfitvnm.vimusic.ui.styling.LocalAppearance
-import it.vfsfitvnm.vimusic.ui.styling.px
-import it.vfsfitvnm.vimusic.utils.albumSortByKey
-import it.vfsfitvnm.vimusic.utils.albumSortOrderKey
-import it.vfsfitvnm.vimusic.utils.rememberPreference
+import it.pixiekevin.compose.persist.persist
+import it.pixiekevin.rocketengine.Database
+import it.pixiekevin.rocketengine.LocalPlayerAwareWindowInsets
+import it.pixiekevin.rocketengine.R
+import it.pixiekevin.rocketengine.enums.AlbumSortBy
+import it.pixiekevin.rocketengine.enums.SortOrder
+import it.pixiekevin.rocketengine.models.Album
+import it.pixiekevin.rocketengine.ui.components.themed.FloatingActionsContainerWithScrollToTop
+import it.pixiekevin.rocketengine.ui.components.themed.Header
+import it.pixiekevin.rocketengine.ui.components.themed.HeaderIconButton
+import it.pixiekevin.rocketengine.ui.items.AlbumItem
+import it.pixiekevin.rocketengine.ui.styling.Dimensions
+import it.pixiekevin.rocketengine.ui.styling.LocalAppearance
+import it.pixiekevin.rocketengine.ui.styling.px
+import it.pixiekevin.rocketengine.utils.albumSortByKey
+import it.pixiekevin.rocketengine.utils.albumSortOrderKey
+import it.pixiekevin.rocketengine.utils.rememberPreference
 
 @ExperimentalFoundationApi
 @ExperimentalAnimationApi

@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.components
+package it.pixiekevin.rocketengine.ui.components
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.Animatable

@@ -1,4 +1,4 @@
-package it.vfsfitvnm.innertube
+package it.pixiekevin.innertube
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.okhttp.OkHttp
@@ -12,9 +12,9 @@ import io.ktor.client.request.header
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
-import it.vfsfitvnm.innertube.models.NavigationEndpoint
-import it.vfsfitvnm.innertube.models.Runs
-import it.vfsfitvnm.innertube.models.Thumbnail
+import it.pixiekevin.innertube.models.NavigationEndpoint
+import it.pixiekevin.innertube.models.Runs
+import it.pixiekevin.innertube.models.Thumbnail
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 

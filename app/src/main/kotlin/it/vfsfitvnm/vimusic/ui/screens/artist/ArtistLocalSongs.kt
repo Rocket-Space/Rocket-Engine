@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.screens.artist
+package it.pixiekevin.rocketengine.ui.screens.artist
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -19,27 +19,27 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import it.vfsfitvnm.compose.persist.persist
-import it.vfsfitvnm.vimusic.Database
-import it.vfsfitvnm.vimusic.LocalPlayerAwareWindowInsets
-import it.vfsfitvnm.vimusic.LocalPlayerServiceBinder
-import it.vfsfitvnm.vimusic.R
-import it.vfsfitvnm.vimusic.models.Song
-import it.vfsfitvnm.vimusic.ui.components.LocalMenuState
-import it.vfsfitvnm.vimusic.ui.components.ShimmerHost
-import it.vfsfitvnm.vimusic.ui.components.themed.FloatingActionsContainerWithScrollToTop
-import it.vfsfitvnm.vimusic.ui.components.themed.LayoutWithAdaptiveThumbnail
-import it.vfsfitvnm.vimusic.ui.components.themed.NonQueuedMediaItemMenu
-import it.vfsfitvnm.vimusic.ui.components.themed.SecondaryTextButton
-import it.vfsfitvnm.vimusic.ui.items.SongItem
-import it.vfsfitvnm.vimusic.ui.items.SongItemPlaceholder
-import it.vfsfitvnm.vimusic.ui.styling.Dimensions
-import it.vfsfitvnm.vimusic.ui.styling.LocalAppearance
-import it.vfsfitvnm.vimusic.ui.styling.px
-import it.vfsfitvnm.vimusic.utils.asMediaItem
-import it.vfsfitvnm.vimusic.utils.enqueue
-import it.vfsfitvnm.vimusic.utils.forcePlayAtIndex
-import it.vfsfitvnm.vimusic.utils.forcePlayFromBeginning
+import it.pixiekevin.compose.persist.persist
+import it.pixiekevin.rocketengine.Database
+import it.pixiekevin.rocketengine.LocalPlayerAwareWindowInsets
+import it.pixiekevin.rocketengine.LocalPlayerServiceBinder
+import it.pixiekevin.rocketengine.R
+import it.pixiekevin.rocketengine.models.Song
+import it.pixiekevin.rocketengine.ui.components.LocalMenuState
+import it.pixiekevin.rocketengine.ui.components.ShimmerHost
+import it.pixiekevin.rocketengine.ui.components.themed.FloatingActionsContainerWithScrollToTop
+import it.pixiekevin.rocketengine.ui.components.themed.LayoutWithAdaptiveThumbnail
+import it.pixiekevin.rocketengine.ui.components.themed.NonQueuedMediaItemMenu
+import it.pixiekevin.rocketengine.ui.components.themed.SecondaryTextButton
+import it.pixiekevin.rocketengine.ui.items.SongItem
+import it.pixiekevin.rocketengine.ui.items.SongItemPlaceholder
+import it.pixiekevin.rocketengine.ui.styling.Dimensions
+import it.pixiekevin.rocketengine.ui.styling.LocalAppearance
+import it.pixiekevin.rocketengine.ui.styling.px
+import it.pixiekevin.rocketengine.utils.asMediaItem
+import it.pixiekevin.rocketengine.utils.enqueue
+import it.pixiekevin.rocketengine.utils.forcePlayAtIndex
+import it.pixiekevin.rocketengine.utils.forcePlayFromBeginning
 
 @ExperimentalFoundationApi
 @ExperimentalAnimationApi

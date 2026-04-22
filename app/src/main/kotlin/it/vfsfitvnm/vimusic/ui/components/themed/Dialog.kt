@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.components.themed
+package it.pixiekevin.rocketengine.ui.components.themed
 
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -48,12 +48,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import it.vfsfitvnm.vimusic.ui.styling.LocalAppearance
-import it.vfsfitvnm.vimusic.utils.center
-import it.vfsfitvnm.vimusic.utils.drawCircle
-import it.vfsfitvnm.vimusic.utils.medium
-import it.vfsfitvnm.vimusic.utils.secondary
-import it.vfsfitvnm.vimusic.utils.semiBold
+import it.pixiekevin.rocketengine.ui.styling.LocalAppearance
+import it.pixiekevin.rocketengine.utils.center
+import it.pixiekevin.rocketengine.utils.drawCircle
+import it.pixiekevin.rocketengine.utils.medium
+import it.pixiekevin.rocketengine.utils.secondary
+import it.pixiekevin.rocketengine.utils.semiBold
 import kotlinx.coroutines.delay
 
 @Composable

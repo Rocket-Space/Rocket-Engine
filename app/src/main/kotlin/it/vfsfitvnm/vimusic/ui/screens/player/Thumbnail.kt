@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.screens.player
+package it.pixiekevin.rocketengine.ui.screens.player
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentTransitionScope
@@ -30,18 +30,18 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import coil.compose.AsyncImage
-import it.vfsfitvnm.vimusic.Database
-import it.vfsfitvnm.vimusic.LocalPlayerServiceBinder
-import it.vfsfitvnm.vimusic.service.LoginRequiredException
-import it.vfsfitvnm.vimusic.service.PlayableFormatNotFoundException
-import it.vfsfitvnm.vimusic.service.UnplayableException
-import it.vfsfitvnm.vimusic.service.VideoIdMismatchException
-import it.vfsfitvnm.vimusic.ui.styling.Dimensions
-import it.vfsfitvnm.vimusic.ui.styling.LocalAppearance
-import it.vfsfitvnm.vimusic.ui.styling.px
-import it.vfsfitvnm.vimusic.utils.currentWindow
-import it.vfsfitvnm.vimusic.utils.DisposableListener
-import it.vfsfitvnm.vimusic.utils.thumbnail
+import it.pixiekevin.rocketengine.Database
+import it.pixiekevin.rocketengine.LocalPlayerServiceBinder
+import it.pixiekevin.rocketengine.service.LoginRequiredException
+import it.pixiekevin.rocketengine.service.PlayableFormatNotFoundException
+import it.pixiekevin.rocketengine.service.UnplayableException
+import it.pixiekevin.rocketengine.service.VideoIdMismatchException
+import it.pixiekevin.rocketengine.ui.styling.Dimensions
+import it.pixiekevin.rocketengine.ui.styling.LocalAppearance
+import it.pixiekevin.rocketengine.ui.styling.px
+import it.pixiekevin.rocketengine.utils.currentWindow
+import it.pixiekevin.rocketengine.utils.DisposableListener
+import it.pixiekevin.rocketengine.utils.thumbnail
 import java.net.UnknownHostException
 import java.nio.channels.UnresolvedAddressException
 

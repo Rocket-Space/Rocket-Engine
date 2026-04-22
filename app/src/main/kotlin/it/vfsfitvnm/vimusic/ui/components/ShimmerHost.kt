@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.components
+package it.pixiekevin.rocketengine.ui.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

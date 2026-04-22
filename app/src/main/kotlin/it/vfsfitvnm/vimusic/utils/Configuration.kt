@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.utils
+package it.pixiekevin.rocketengine.utils
 
 import android.content.res.Configuration
 import androidx.compose.runtime.Composable

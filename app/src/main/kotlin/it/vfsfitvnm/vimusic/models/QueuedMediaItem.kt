@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.models
+package it.pixiekevin.rocketengine.models
 
 import androidx.compose.runtime.Immutable
 import androidx.media3.common.MediaItem

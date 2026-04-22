@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.screens.search
+package it.pixiekevin.rocketengine.ui.screens.search
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -16,13 +16,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
-import it.vfsfitvnm.compose.persist.PersistMapCleanup
-import it.vfsfitvnm.compose.routing.RouteHandler
-import it.vfsfitvnm.vimusic.R
-import it.vfsfitvnm.vimusic.ui.components.themed.Scaffold
-import it.vfsfitvnm.vimusic.ui.screens.globalRoutes
-import it.vfsfitvnm.vimusic.ui.styling.LocalAppearance
-import it.vfsfitvnm.vimusic.utils.secondary
+import it.pixiekevin.compose.persist.PersistMapCleanup
+import it.pixiekevin.compose.routing.RouteHandler
+import it.pixiekevin.rocketengine.R
+import it.pixiekevin.rocketengine.ui.components.themed.Scaffold
+import it.pixiekevin.rocketengine.ui.screens.globalRoutes
+import it.pixiekevin.rocketengine.ui.styling.LocalAppearance
+import it.pixiekevin.rocketengine.utils.secondary
 
 @ExperimentalFoundationApi
 @ExperimentalAnimationApi

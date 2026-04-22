@@ -1,4 +1,4 @@
-package it.vfsfitvnm.compose.reordering
+package it.pixiekevin.compose.reordering
 
 import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.gestures.ScrollableDefaults

@@ -1,4 +1,4 @@
-package it.vfsfitvnm.innertube.requests
+package it.pixiekevin.innertube.requests
 
 import io.ktor.client.call.body
 import io.ktor.client.request.get
@@ -6,11 +6,11 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
-import it.vfsfitvnm.innertube.Innertube
-import it.vfsfitvnm.innertube.models.Context
-import it.vfsfitvnm.innertube.models.PlayerResponse
-import it.vfsfitvnm.innertube.models.bodies.PlayerBody
-import it.vfsfitvnm.innertube.utils.runCatchingNonCancellable
+import it.pixiekevin.innertube.Innertube
+import it.pixiekevin.innertube.models.Context
+import it.pixiekevin.innertube.models.PlayerResponse
+import it.pixiekevin.innertube.models.bodies.PlayerBody
+import it.pixiekevin.innertube.utils.runCatchingNonCancellable
 import kotlinx.serialization.Serializable
 
 suspend fun Innertube.player(body: PlayerBody) = runCatchingNonCancellable {

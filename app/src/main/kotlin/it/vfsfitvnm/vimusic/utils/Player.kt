@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.utils
+package it.pixiekevin.rocketengine.utils
 
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem

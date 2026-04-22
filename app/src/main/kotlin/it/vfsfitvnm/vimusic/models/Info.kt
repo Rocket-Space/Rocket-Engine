@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.models
+package it.pixiekevin.rocketengine.models
 
 data class Info(
     val id: String,

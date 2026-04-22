@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.utils
+package it.pixiekevin.rocketengine.utils
 
 import android.app.Notification
 import android.app.Service

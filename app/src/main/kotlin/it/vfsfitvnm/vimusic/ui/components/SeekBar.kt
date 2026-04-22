@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.components
+package it.pixiekevin.rocketengine.ui.components
 
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.animateDp

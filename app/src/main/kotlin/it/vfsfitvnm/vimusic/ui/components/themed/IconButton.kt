@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.components.themed
+package it.pixiekevin.rocketengine.ui.components.themed
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image

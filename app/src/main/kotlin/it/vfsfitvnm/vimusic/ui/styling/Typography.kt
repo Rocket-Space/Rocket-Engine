@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.styling
+package it.pixiekevin.rocketengine.ui.styling
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.saveable.Saver
@@ -10,7 +10,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import it.vfsfitvnm.vimusic.R
+import it.pixiekevin.rocketengine.R
 
 @Immutable
 data class Typography(

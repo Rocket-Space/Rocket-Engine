@@ -1,4 +1,4 @@
-package it.vfsfitvnm.compose.routing
+package it.pixiekevin.compose.routing
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect

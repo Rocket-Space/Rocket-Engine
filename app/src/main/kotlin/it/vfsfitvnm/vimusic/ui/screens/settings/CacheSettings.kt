@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.screens.settings
+package it.pixiekevin.rocketengine.ui.screens.settings
 
 import android.text.format.Formatter
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -20,15 +20,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import coil.Coil
 import coil.annotation.ExperimentalCoilApi
-import it.vfsfitvnm.vimusic.LocalPlayerAwareWindowInsets
-import it.vfsfitvnm.vimusic.LocalPlayerServiceBinder
-import it.vfsfitvnm.vimusic.enums.CoilDiskCacheMaxSize
-import it.vfsfitvnm.vimusic.enums.ExoPlayerDiskCacheMaxSize
-import it.vfsfitvnm.vimusic.ui.components.themed.Header
-import it.vfsfitvnm.vimusic.ui.styling.LocalAppearance
-import it.vfsfitvnm.vimusic.utils.coilDiskCacheMaxSizeKey
-import it.vfsfitvnm.vimusic.utils.exoPlayerDiskCacheMaxSizeKey
-import it.vfsfitvnm.vimusic.utils.rememberPreference
+import it.pixiekevin.rocketengine.LocalPlayerAwareWindowInsets
+import it.pixiekevin.rocketengine.LocalPlayerServiceBinder
+import it.pixiekevin.rocketengine.enums.CoilDiskCacheMaxSize
+import it.pixiekevin.rocketengine.enums.ExoPlayerDiskCacheMaxSize
+import it.pixiekevin.rocketengine.ui.components.themed.Header
+import it.pixiekevin.rocketengine.ui.styling.LocalAppearance
+import it.pixiekevin.rocketengine.utils.coilDiskCacheMaxSizeKey
+import it.pixiekevin.rocketengine.utils.exoPlayerDiskCacheMaxSizeKey
+import it.pixiekevin.rocketengine.utils.rememberPreference
 
 @OptIn(ExperimentalCoilApi::class)
 @ExperimentalAnimationApi

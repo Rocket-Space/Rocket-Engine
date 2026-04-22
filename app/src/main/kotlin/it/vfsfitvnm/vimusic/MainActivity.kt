@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic
+package it.pixiekevin.rocketengine
 
 import android.content.ComponentName
 import android.content.Context
@@ -58,42 +58,43 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import com.valentinilk.shimmer.LocalShimmerTheme
 import com.valentinilk.shimmer.defaultShimmerTheme
-import it.vfsfitvnm.compose.persist.PersistMap
-import it.vfsfitvnm.compose.persist.PersistMapOwner
-import it.vfsfitvnm.innertube.Innertube
-import it.vfsfitvnm.innertube.models.bodies.BrowseBody
-import it.vfsfitvnm.innertube.requests.playlistPage
-import it.vfsfitvnm.innertube.requests.song
-import it.vfsfitvnm.vimusic.enums.ColorPaletteMode
-import it.vfsfitvnm.vimusic.enums.ColorPaletteName
-import it.vfsfitvnm.vimusic.enums.ThumbnailRoundness
-import it.vfsfitvnm.vimusic.service.PlayerService
-import it.vfsfitvnm.vimusic.ui.components.BottomSheetMenu
-import it.vfsfitvnm.vimusic.ui.components.LocalMenuState
-import it.vfsfitvnm.vimusic.ui.components.rememberBottomSheetState
-import it.vfsfitvnm.vimusic.ui.screens.albumRoute
-import it.vfsfitvnm.vimusic.ui.screens.artistRoute
-import it.vfsfitvnm.vimusic.ui.screens.home.HomeScreen
-import it.vfsfitvnm.vimusic.ui.screens.player.Player
-import it.vfsfitvnm.vimusic.ui.screens.playlistRoute
-import it.vfsfitvnm.vimusic.ui.styling.Appearance
-import it.vfsfitvnm.vimusic.ui.styling.Dimensions
-import it.vfsfitvnm.vimusic.ui.styling.LocalAppearance
-import it.vfsfitvnm.vimusic.ui.styling.colorPaletteOf
-import it.vfsfitvnm.vimusic.ui.styling.dynamicColorPaletteOf
-import it.vfsfitvnm.vimusic.ui.styling.typographyOf
-import it.vfsfitvnm.vimusic.utils.applyFontPaddingKey
-import it.vfsfitvnm.vimusic.utils.asMediaItem
-import it.vfsfitvnm.vimusic.utils.colorPaletteModeKey
-import it.vfsfitvnm.vimusic.utils.colorPaletteNameKey
-import it.vfsfitvnm.vimusic.utils.forcePlay
-import it.vfsfitvnm.vimusic.utils.getEnum
-import it.vfsfitvnm.vimusic.utils.intent
-import it.vfsfitvnm.vimusic.utils.isAtLeastAndroid6
-import it.vfsfitvnm.vimusic.utils.isAtLeastAndroid8
-import it.vfsfitvnm.vimusic.utils.preferences
-import it.vfsfitvnm.vimusic.utils.thumbnailRoundnessKey
-import it.vfsfitvnm.vimusic.utils.useSystemFontKey
+import it.pixiekevin.compose.persist.PersistMap
+import it.pixiekevin.compose.persist.PersistMapOwner
+import it.pixiekevin.innertube.Innertube
+import it.pixiekevin.innertube.models.bodies.BrowseBody
+import it.pixiekevin.innertube.requests.playlistPage
+import it.pixiekevin.innertube.requests.song
+import it.pixiekevin.rocketengine.enums.ColorPaletteMode
+import it.pixiekevin.rocketengine.enums.ColorPaletteName
+import it.pixiekevin.rocketengine.enums.ThumbnailRoundness
+import it.pixiekevin.rocketengine.service.PlayerService
+import it.pixiekevin.rocketengine.ui.components.BottomSheetMenu
+import it.pixiekevin.rocketengine.auth.GoogleAuthManager
+import it.pixiekevin.rocketengine.ui.components.LocalMenuState
+import it.pixiekevin.rocketengine.ui.components.rememberBottomSheetState
+import it.pixiekevin.rocketengine.ui.screens.albumRoute
+import it.pixiekevin.rocketengine.ui.screens.artistRoute
+import it.pixiekevin.rocketengine.ui.screens.home.HomeScreen
+import it.pixiekevin.rocketengine.ui.screens.player.Player
+import it.pixiekevin.rocketengine.ui.screens.playlistRoute
+import it.pixiekevin.rocketengine.ui.styling.Appearance
+import it.pixiekevin.rocketengine.ui.styling.Dimensions
+import it.pixiekevin.rocketengine.ui.styling.LocalAppearance
+import it.pixiekevin.rocketengine.ui.styling.colorPaletteOf
+import it.pixiekevin.rocketengine.ui.styling.dynamicColorPaletteOf
+import it.pixiekevin.rocketengine.ui.styling.typographyOf
+import it.pixiekevin.rocketengine.utils.applyFontPaddingKey
+import it.pixiekevin.rocketengine.utils.asMediaItem
+import it.pixiekevin.rocketengine.utils.colorPaletteModeKey
+import it.pixiekevin.rocketengine.utils.colorPaletteNameKey
+import it.pixiekevin.rocketengine.utils.forcePlay
+import it.pixiekevin.rocketengine.utils.getEnum
+import it.pixiekevin.rocketengine.utils.intent
+import it.pixiekevin.rocketengine.utils.isAtLeastAndroid6
+import it.pixiekevin.rocketengine.utils.isAtLeastAndroid8
+import it.pixiekevin.rocketengine.utils.preferences
+import it.pixiekevin.rocketengine.utils.thumbnailRoundnessKey
+import it.pixiekevin.rocketengine.utils.useSystemFontKey
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.filterNotNull
@@ -102,6 +103,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MainActivity : ComponentActivity(), PersistMapOwner {
+    companion object {
+        private const val RC_SIGN_IN = 9001
+    }
     private val serviceConnection = object : ServiceConnection {
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             if (service is PlayerService.Binder) {
@@ -115,6 +119,8 @@ class MainActivity : ComponentActivity(), PersistMapOwner {
     }
 
     private var binder by mutableStateOf<PlayerService.Binder?>(null)
+
+    private val googleAuthManager by lazy { GoogleAuthManager(this) }
 
     override lateinit var persistMap: PersistMap
 
@@ -345,6 +351,7 @@ class MainActivity : ComponentActivity(), PersistMapOwner {
                     LocalRippleTheme provides rippleTheme,
                     LocalShimmerTheme provides shimmerTheme,
                     LocalPlayerServiceBinder provides binder,
+                    LocalGoogleAuthManager provides googleAuthManager,
                     LocalPlayerAwareWindowInsets provides playerAwareWindowInsets,
                     LocalLayoutDirection provides LayoutDirection.Ltr
                 ) {
@@ -405,6 +412,24 @@ class MainActivity : ComponentActivity(), PersistMapOwner {
         }
 
         onNewIntent(intent)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == RC_SIGN_IN) {
+            lifecycleScope.launch {
+                try {
+                    val account = googleAuthManager.handleSignInResult(data)
+                    if (account != null) {
+                        Toast.makeText(this@MainActivity, "Signed in as ${account.email}", Toast.LENGTH_SHORT).show()
+                        // TODO: Fetch YouTube playlists
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(this@MainActivity, "Sign in failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -487,5 +512,7 @@ class MainActivity : ComponentActivity(), PersistMapOwner {
 }
 
 val LocalPlayerServiceBinder = staticCompositionLocalOf<PlayerService.Binder?> { null }
+
+val LocalGoogleAuthManager = staticCompositionLocalOf<GoogleAuthManager> { error("GoogleAuthManager not provided") }
 
 val LocalPlayerAwareWindowInsets = staticCompositionLocalOf<WindowInsets> { TODO() }

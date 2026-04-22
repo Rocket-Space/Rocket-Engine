@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.screens.settings
+package it.pixiekevin.rocketengine.ui.screens.settings
 
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
@@ -28,19 +28,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import it.vfsfitvnm.vimusic.Database
-import it.vfsfitvnm.vimusic.LocalPlayerAwareWindowInsets
-import it.vfsfitvnm.vimusic.query
-import it.vfsfitvnm.vimusic.service.PlayerMediaBrowserService
-import it.vfsfitvnm.vimusic.ui.components.themed.Header
-import it.vfsfitvnm.vimusic.ui.styling.LocalAppearance
-import it.vfsfitvnm.vimusic.utils.isAtLeastAndroid12
-import it.vfsfitvnm.vimusic.utils.isAtLeastAndroid6
-import it.vfsfitvnm.vimusic.utils.isIgnoringBatteryOptimizations
-import it.vfsfitvnm.vimusic.utils.isInvincibilityEnabledKey
-import it.vfsfitvnm.vimusic.utils.pauseSearchHistoryKey
-import it.vfsfitvnm.vimusic.utils.rememberPreference
-import it.vfsfitvnm.vimusic.utils.toast
+import it.pixiekevin.rocketengine.Database
+import it.pixiekevin.rocketengine.LocalGoogleAuthManager
+import it.pixiekevin.rocketengine.LocalPlayerAwareWindowInsets
+import it.pixiekevin.rocketengine.query
+import it.pixiekevin.rocketengine.service.PlayerMediaBrowserService
+import it.pixiekevin.rocketengine.ui.components.themed.Header
+import it.pixiekevin.rocketengine.ui.styling.LocalAppearance
+import it.pixiekevin.rocketengine.utils.isAtLeastAndroid12
+import it.pixiekevin.rocketengine.utils.isAtLeastAndroid6
+import it.pixiekevin.rocketengine.utils.isIgnoringBatteryOptimizations
+import it.pixiekevin.rocketengine.utils.isInvincibilityEnabledKey
+import it.pixiekevin.rocketengine.utils.pauseSearchHistoryKey
+import it.pixiekevin.rocketengine.utils.rememberPreference
+import it.pixiekevin.rocketengine.download.DownloadPath
+import it.pixiekevin.rocketengine.utils.toast
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 @SuppressLint("BatteryLife")
@@ -49,6 +51,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 fun OtherSettings() {
     val context = LocalContext.current
     val (colorPalette) = LocalAppearance.current
+    val googleAuthManager = LocalGoogleAuthManager.current
 
     var isAndroidAutoEnabled by remember {
         val component = ComponentName(context, PlayerMediaBrowserService::class.java)
@@ -86,6 +89,10 @@ fun OtherSettings() {
     val queriesCount by remember {
         Database.queriesCount().distinctUntilChanged()
     }.collectAsState(initial = 0)
+
+    val downloadManager = remember { it.pixiekevin.rocketengine.download.DownloadManager(context) }
+    val downloadPath = remember { downloadManager.getDownloadPathPreference() }
+    val promptForLocation = remember { downloadManager.getPromptForLocation() }
 
     Column(
         modifier = Modifier
@@ -177,6 +184,58 @@ fun OtherSettings() {
             text = "When turning off battery optimizations is not enough",
             isChecked = isInvincibilityEnabled,
             onCheckedChange = { isInvincibilityEnabled = it }
+        )
+
+        SettingsGroupSpacer()
+
+        SettingsEntryGroupText(title = "YOUTUBE INTEGRATION")
+
+        val isSignedIn = googleAuthManager.isSignedIn()
+        val accountEmail = googleAuthManager.getAccountEmail()
+
+        SettingsEntry(
+            title = "Google Account",
+            text = if (isSignedIn) {
+                accountEmail ?: "Signed in"
+            } else {
+                "Not signed in"
+            },
+            onClick = {
+                if (isSignedIn) {
+                    googleAuthManager.signOut()
+                } else {
+                    activityResultLauncher.launch(googleAuthManager.getSignInIntent())
+                }
+            }
+        )
+
+        SettingsGroupSpacer()
+
+        SettingsEntryGroupText(title = "DOWNLOADS")
+
+        EnumValueSelectorSettingsEntry(
+            title = "Download location",
+            selectedValue = downloadPath,
+            onValueSelected = {
+                downloadManager.setDownloadPathPreference(it)
+            },
+            valueText = { path ->
+                when (path) {
+                    DownloadPath.CACHE -> "App cache"
+                    DownloadPath.MUSIC -> "Music folder"
+                    DownloadPath.DOWNLOADS -> "Downloads folder"
+                    DownloadPath.CUSTOM -> "Custom path"
+                }
+            }
+        )
+
+        SwitchSettingEntry(
+            title = "Prompt for location",
+            text = "Ask where to save each download",
+            isChecked = promptForLocation,
+            onCheckedChange = {
+                downloadManager.setPromptForLocation(it)
+            }
         )
     }
 }

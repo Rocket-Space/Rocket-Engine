@@ -1,6 +1,6 @@
-package it.vfsfitvnm.innertube.models.bodies
+package it.pixiekevin.innertube.models.bodies
 
-import it.vfsfitvnm.innertube.models.Context
+import it.pixiekevin.innertube.models.Context
 import kotlinx.serialization.Serializable
 
 @Serializable

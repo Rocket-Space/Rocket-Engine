@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.screens.settings
+package it.pixiekevin.rocketengine.ui.screens.settings
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
@@ -18,20 +18,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import it.vfsfitvnm.vimusic.LocalPlayerAwareWindowInsets
-import it.vfsfitvnm.vimusic.enums.ColorPaletteMode
-import it.vfsfitvnm.vimusic.enums.ColorPaletteName
-import it.vfsfitvnm.vimusic.enums.ThumbnailRoundness
-import it.vfsfitvnm.vimusic.ui.components.themed.Header
-import it.vfsfitvnm.vimusic.ui.styling.LocalAppearance
-import it.vfsfitvnm.vimusic.utils.applyFontPaddingKey
-import it.vfsfitvnm.vimusic.utils.colorPaletteModeKey
-import it.vfsfitvnm.vimusic.utils.colorPaletteNameKey
-import it.vfsfitvnm.vimusic.utils.isAtLeastAndroid13
-import it.vfsfitvnm.vimusic.utils.isShowingThumbnailInLockscreenKey
-import it.vfsfitvnm.vimusic.utils.rememberPreference
-import it.vfsfitvnm.vimusic.utils.thumbnailRoundnessKey
-import it.vfsfitvnm.vimusic.utils.useSystemFontKey
+import it.pixiekevin.rocketengine.LocalPlayerAwareWindowInsets
+import it.pixiekevin.rocketengine.enums.ColorPaletteMode
+import it.pixiekevin.rocketengine.enums.ColorPaletteName
+import it.pixiekevin.rocketengine.enums.ThumbnailRoundness
+import it.pixiekevin.rocketengine.ui.components.themed.Header
+import it.pixiekevin.rocketengine.ui.styling.LocalAppearance
+import it.pixiekevin.rocketengine.utils.applyFontPaddingKey
+import it.pixiekevin.rocketengine.utils.colorPaletteModeKey
+import it.pixiekevin.rocketengine.utils.colorPaletteNameKey
+import it.pixiekevin.rocketengine.utils.isAtLeastAndroid13
+import it.pixiekevin.rocketengine.utils.isShowingThumbnailInLockscreenKey
+import it.pixiekevin.rocketengine.utils.rememberPreference
+import it.pixiekevin.rocketengine.utils.thumbnailRoundnessKey
+import it.pixiekevin.rocketengine.utils.useSystemFontKey
 
 @ExperimentalAnimationApi
 @Composable

@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.screens.settings
+package it.pixiekevin.rocketengine.ui.screens.settings
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
@@ -14,11 +14,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
-import it.vfsfitvnm.vimusic.BuildConfig
-import it.vfsfitvnm.vimusic.LocalPlayerAwareWindowInsets
-import it.vfsfitvnm.vimusic.ui.components.themed.Header
-import it.vfsfitvnm.vimusic.ui.styling.LocalAppearance
-import it.vfsfitvnm.vimusic.utils.secondary
+import it.pixiekevin.rocketengine.BuildConfig
+import it.pixiekevin.rocketengine.LocalPlayerAwareWindowInsets
+import it.pixiekevin.rocketengine.ui.components.themed.Header
+import it.pixiekevin.rocketengine.ui.styling.LocalAppearance
+import it.pixiekevin.rocketengine.utils.secondary
 
 @ExperimentalAnimationApi
 @Composable
@@ -39,7 +39,7 @@ fun About() {
     ) {
         Header(title = "About") {
             BasicText(
-                text = "v${BuildConfig.VERSION_NAME} by vfsfitvnm",
+                text = "v${BuildConfig.VERSION_NAME} by pixiekevin",
                 style = typography.s.secondary
             )
         }
@@ -50,7 +50,7 @@ fun About() {
             title = "GitHub",
             text = "View the source code",
             onClick = {
-                uriHandler.openUri("https://github.com/vfsfitvnm/ViMusic")
+                uriHandler.openUri("https://github.com/pixiekevin/ViMusic")
             }
         )
 
@@ -62,7 +62,7 @@ fun About() {
             title = "Report an issue",
             text = "You will be redirected to GitHub",
             onClick = {
-                uriHandler.openUri("https://github.com/vfsfitvnm/ViMusic/issues/new?assignees=&labels=bug&template=bug_report.yaml")
+                uriHandler.openUri("https://github.com/pixiekevin/ViMusic/issues/new?assignees=&labels=bug&template=bug_report.yaml")
             }
         )
 
@@ -70,7 +70,7 @@ fun About() {
             title = "Request a feature or suggest an idea",
             text = "You will be redirected to GitHub",
             onClick = {
-                uriHandler.openUri("https://github.com/vfsfitvnm/ViMusic/issues/new?assignees=&labels=enhancement&template=feature_request.yaml")
+                uriHandler.openUri("https://github.com/pixiekevin/ViMusic/issues/new?assignees=&labels=enhancement&template=feature_request.yaml")
             }
         )
     }

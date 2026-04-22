@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.screens.builtinplaylist
+package it.pixiekevin.rocketengine.ui.screens.builtinplaylist
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -6,12 +6,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.saveable.rememberSaveableStateHolder
-import it.vfsfitvnm.compose.persist.PersistMapCleanup
-import it.vfsfitvnm.compose.routing.RouteHandler
-import it.vfsfitvnm.vimusic.R
-import it.vfsfitvnm.vimusic.enums.BuiltInPlaylist
-import it.vfsfitvnm.vimusic.ui.components.themed.Scaffold
-import it.vfsfitvnm.vimusic.ui.screens.globalRoutes
+import it.pixiekevin.compose.persist.PersistMapCleanup
+import it.pixiekevin.compose.routing.RouteHandler
+import it.pixiekevin.rocketengine.R
+import it.pixiekevin.rocketengine.enums.BuiltInPlaylist
+import it.pixiekevin.rocketengine.ui.components.themed.Scaffold
+import it.pixiekevin.rocketengine.ui.screens.globalRoutes
 
 @ExperimentalFoundationApi
 @ExperimentalAnimationApi

@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.service
+package it.pixiekevin.rocketengine.service
 
 import android.media.MediaDescription as BrowserMediaDescription
 import android.media.browse.MediaBrowser.MediaItem as BrowserMediaItem
@@ -17,17 +17,17 @@ import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.media3.common.Player
 import androidx.media3.datasource.cache.Cache
-import it.vfsfitvnm.vimusic.Database
-import it.vfsfitvnm.vimusic.R
-import it.vfsfitvnm.vimusic.models.Album
-import it.vfsfitvnm.vimusic.models.PlaylistPreview
-import it.vfsfitvnm.vimusic.models.Song
-import it.vfsfitvnm.vimusic.models.SongWithContentLength
-import it.vfsfitvnm.vimusic.utils.asMediaItem
-import it.vfsfitvnm.vimusic.utils.forcePlayAtIndex
-import it.vfsfitvnm.vimusic.utils.forceSeekToNext
-import it.vfsfitvnm.vimusic.utils.forceSeekToPrevious
-import it.vfsfitvnm.vimusic.utils.intent
+import it.pixiekevin.rocketengine.Database
+import it.pixiekevin.rocketengine.R
+import it.pixiekevin.rocketengine.models.Album
+import it.pixiekevin.rocketengine.models.PlaylistPreview
+import it.pixiekevin.rocketengine.models.Song
+import it.pixiekevin.rocketengine.models.SongWithContentLength
+import it.pixiekevin.rocketengine.utils.asMediaItem
+import it.pixiekevin.rocketengine.utils.forcePlayAtIndex
+import it.pixiekevin.rocketengine.utils.forceSeekToNext
+import it.pixiekevin.rocketengine.utils.forceSeekToPrevious
+import it.pixiekevin.rocketengine.utils.intent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first

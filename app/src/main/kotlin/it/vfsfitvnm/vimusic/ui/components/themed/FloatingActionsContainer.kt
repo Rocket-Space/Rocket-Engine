@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.components.themed
+package it.pixiekevin.rocketengine.ui.components.themed
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -24,11 +24,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import it.vfsfitvnm.vimusic.LocalPlayerAwareWindowInsets
-import it.vfsfitvnm.vimusic.R
-import it.vfsfitvnm.vimusic.utils.ScrollingInfo
-import it.vfsfitvnm.vimusic.utils.scrollingInfo
-import it.vfsfitvnm.vimusic.utils.smoothScrollToTop
+import it.pixiekevin.rocketengine.LocalPlayerAwareWindowInsets
+import it.pixiekevin.rocketengine.R
+import it.pixiekevin.rocketengine.utils.ScrollingInfo
+import it.pixiekevin.rocketengine.utils.scrollingInfo
+import it.pixiekevin.rocketengine.utils.smoothScrollToTop
 import kotlinx.coroutines.launch
 
 @ExperimentalAnimationApi

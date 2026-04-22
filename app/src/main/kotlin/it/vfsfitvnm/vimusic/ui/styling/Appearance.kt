@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.styling
+package it.pixiekevin.rocketengine.ui.styling
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.saveable.Saver

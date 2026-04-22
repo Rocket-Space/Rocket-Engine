@@ -1,13 +1,13 @@
-package it.vfsfitvnm.vimusic
+package it.pixiekevin.rocketengine
 
 import android.app.Application
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.disk.DiskCache
-import it.vfsfitvnm.vimusic.enums.CoilDiskCacheMaxSize
-import it.vfsfitvnm.vimusic.utils.coilDiskCacheMaxSizeKey
-import it.vfsfitvnm.vimusic.utils.getEnum
-import it.vfsfitvnm.vimusic.utils.preferences
+import it.pixiekevin.rocketengine.enums.CoilDiskCacheMaxSize
+import it.pixiekevin.rocketengine.utils.coilDiskCacheMaxSizeKey
+import it.pixiekevin.rocketengine.utils.getEnum
+import it.pixiekevin.rocketengine.utils.preferences
 
 class MainApplication : Application(), ImageLoaderFactory {
     override fun onCreate() {

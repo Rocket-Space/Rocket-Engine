@@ -1,41 +1,42 @@
-package it.vfsfitvnm.vimusic.ui.screens.home
+package it.pixiekevin.rocketengine.ui.screens.home
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.ui.platform.LocalContext
-import it.vfsfitvnm.compose.persist.PersistMapCleanup
-import it.vfsfitvnm.compose.routing.RouteHandler
-import it.vfsfitvnm.compose.routing.defaultStacking
-import it.vfsfitvnm.compose.routing.defaultStill
-import it.vfsfitvnm.compose.routing.defaultUnstacking
-import it.vfsfitvnm.compose.routing.isStacking
-import it.vfsfitvnm.compose.routing.isUnknown
-import it.vfsfitvnm.compose.routing.isUnstacking
-import it.vfsfitvnm.vimusic.Database
-import it.vfsfitvnm.vimusic.R
-import it.vfsfitvnm.vimusic.models.SearchQuery
-import it.vfsfitvnm.vimusic.query
-import it.vfsfitvnm.vimusic.ui.components.themed.Scaffold
-import it.vfsfitvnm.vimusic.ui.screens.albumRoute
-import it.vfsfitvnm.vimusic.ui.screens.artistRoute
-import it.vfsfitvnm.vimusic.ui.screens.builtInPlaylistRoute
-import it.vfsfitvnm.vimusic.ui.screens.builtinplaylist.BuiltInPlaylistScreen
-import it.vfsfitvnm.vimusic.ui.screens.globalRoutes
-import it.vfsfitvnm.vimusic.ui.screens.localPlaylistRoute
-import it.vfsfitvnm.vimusic.ui.screens.localplaylist.LocalPlaylistScreen
-import it.vfsfitvnm.vimusic.ui.screens.playlistRoute
-import it.vfsfitvnm.vimusic.ui.screens.search.SearchScreen
-import it.vfsfitvnm.vimusic.ui.screens.searchResultRoute
-import it.vfsfitvnm.vimusic.ui.screens.searchRoute
-import it.vfsfitvnm.vimusic.ui.screens.searchresult.SearchResultScreen
-import it.vfsfitvnm.vimusic.ui.screens.settings.SettingsScreen
-import it.vfsfitvnm.vimusic.ui.screens.settingsRoute
-import it.vfsfitvnm.vimusic.utils.homeScreenTabIndexKey
-import it.vfsfitvnm.vimusic.utils.pauseSearchHistoryKey
-import it.vfsfitvnm.vimusic.utils.preferences
-import it.vfsfitvnm.vimusic.utils.rememberPreference
+import it.pixiekevin.compose.persist.PersistMapCleanup
+import it.pixiekevin.compose.routing.RouteHandler
+import it.pixiekevin.compose.routing.defaultStacking
+import it.pixiekevin.compose.routing.defaultStill
+import it.pixiekevin.compose.routing.defaultUnstacking
+import it.pixiekevin.compose.routing.isStacking
+import it.pixiekevin.compose.routing.isUnknown
+import it.pixiekevin.compose.routing.isUnstacking
+import it.pixiekevin.rocketengine.Database
+import it.pixiekevin.rocketengine.R
+import it.pixiekevin.rocketengine.models.SearchQuery
+import it.pixiekevin.rocketengine.query
+import it.pixiekevin.rocketengine.ui.components.themed.Scaffold
+import it.pixiekevin.rocketengine.ui.screens.albumRoute
+import it.pixiekevin.rocketengine.ui.screens.artistRoute
+import it.pixiekevin.rocketengine.ui.screens.builtInPlaylistRoute
+import it.pixiekevin.rocketengine.ui.screens.builtinplaylist.BuiltInPlaylistScreen
+import it.pixiekevin.rocketengine.ui.screens.globalRoutes
+import it.pixiekevin.rocketengine.ui.screens.home.YouTubePlaylists
+import it.pixiekevin.rocketengine.ui.screens.localPlaylistRoute
+import it.pixiekevin.rocketengine.ui.screens.localplaylist.LocalPlaylistScreen
+import it.pixiekevin.rocketengine.ui.screens.playlistRoute
+import it.pixiekevin.rocketengine.ui.screens.search.SearchScreen
+import it.pixiekevin.rocketengine.ui.screens.searchResultRoute
+import it.pixiekevin.rocketengine.ui.screens.searchRoute
+import it.pixiekevin.rocketengine.ui.screens.searchresult.SearchResultScreen
+import it.pixiekevin.rocketengine.ui.screens.settings.SettingsScreen
+import it.pixiekevin.rocketengine.ui.screens.settingsRoute
+import it.pixiekevin.rocketengine.utils.homeScreenTabIndexKey
+import it.pixiekevin.rocketengine.utils.pauseSearchHistoryKey
+import it.pixiekevin.rocketengine.utils.preferences
+import it.pixiekevin.rocketengine.utils.rememberPreference
 
 @ExperimentalFoundationApi
 @ExperimentalAnimationApi
@@ -122,8 +123,9 @@ fun HomeScreen(onPlaylistUrl: (String) -> Unit) {
                     Item(0, "Quick picks", R.drawable.sparkles)
                     Item(1, "Songs", R.drawable.musical_notes)
                     Item(2, "Playlists", R.drawable.playlist)
-                    Item(3, "Artists", R.drawable.person)
-                    Item(4, "Albums", R.drawable.disc)
+                    Item(3, "YouTube", R.drawable.playlist)
+                    Item(4, "Artists", R.drawable.person)
+                    Item(5, "Albums", R.drawable.disc)
                 }
             ) { currentTabIndex ->
                 saveableStateHolder.SaveableStateProvider(key = currentTabIndex) {
@@ -145,12 +147,17 @@ fun HomeScreen(onPlaylistUrl: (String) -> Unit) {
                             onSearchClick = { searchRoute("") }
                         )
 
-                        3 -> HomeArtistList(
+                        3 -> YouTubePlaylists(
+                            onPlaylistClick = { playlistRoute(it) },
+                            onSearchClick = { searchRoute("") }
+                        )
+
+                        4 -> HomeArtistList(
                             onArtistClick = { artistRoute(it.id) },
                             onSearchClick = { searchRoute("") }
                         )
 
-                        4 -> HomeAlbums(
+                        5 -> HomeAlbums(
                             onAlbumClick = { albumRoute(it.id) },
                             onSearchClick = { searchRoute("") }
                         )

@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.components.themed
+package it.pixiekevin.rocketengine.ui.components.themed
 
 import android.content.Intent
 import androidx.activity.compose.BackHandler
@@ -43,37 +43,39 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.media3.common.MediaItem
-import it.vfsfitvnm.innertube.models.NavigationEndpoint
-import it.vfsfitvnm.vimusic.Database
-import it.vfsfitvnm.vimusic.LocalPlayerServiceBinder
-import it.vfsfitvnm.vimusic.R
-import it.vfsfitvnm.vimusic.enums.PlaylistSortBy
-import it.vfsfitvnm.vimusic.enums.SortOrder
-import it.vfsfitvnm.vimusic.models.Info
-import it.vfsfitvnm.vimusic.models.Playlist
-import it.vfsfitvnm.vimusic.models.Song
-import it.vfsfitvnm.vimusic.models.SongPlaylistMap
-import it.vfsfitvnm.vimusic.query
-import it.vfsfitvnm.vimusic.transaction
-import it.vfsfitvnm.vimusic.ui.items.SongItem
-import it.vfsfitvnm.vimusic.ui.screens.albumRoute
-import it.vfsfitvnm.vimusic.ui.screens.artistRoute
-import it.vfsfitvnm.vimusic.ui.styling.Dimensions
-import it.vfsfitvnm.vimusic.ui.styling.LocalAppearance
-import it.vfsfitvnm.vimusic.ui.styling.favoritesIcon
-import it.vfsfitvnm.vimusic.ui.styling.px
-import it.vfsfitvnm.vimusic.utils.addNext
-import it.vfsfitvnm.vimusic.utils.asMediaItem
-import it.vfsfitvnm.vimusic.utils.enqueue
-import it.vfsfitvnm.vimusic.utils.forcePlay
-import it.vfsfitvnm.vimusic.utils.formatAsDuration
-import it.vfsfitvnm.vimusic.utils.medium
-import it.vfsfitvnm.vimusic.utils.semiBold
-import it.vfsfitvnm.vimusic.utils.thumbnail
+import it.pixiekevin.innertube.models.NavigationEndpoint
+import it.pixiekevin.rocketengine.Database
+import it.pixiekevin.rocketengine.LocalPlayerServiceBinder
+import it.pixiekevin.rocketengine.R
+import it.pixiekevin.rocketengine.enums.PlaylistSortBy
+import it.pixiekevin.rocketengine.enums.SortOrder
+import it.pixiekevin.rocketengine.models.Info
+import it.pixiekevin.rocketengine.models.Playlist
+import it.pixiekevin.rocketengine.models.Song
+import it.pixiekevin.rocketengine.models.SongPlaylistMap
+import it.pixiekevin.rocketengine.query
+import it.pixiekevin.rocketengine.transaction
+import it.pixiekevin.rocketengine.ui.items.SongItem
+import it.pixiekevin.rocketengine.ui.screens.albumRoute
+import it.pixiekevin.rocketengine.ui.screens.artistRoute
+import it.pixiekevin.rocketengine.ui.styling.Dimensions
+import it.pixiekevin.rocketengine.ui.styling.LocalAppearance
+import it.pixiekevin.rocketengine.ui.styling.favoritesIcon
+import it.pixiekevin.rocketengine.ui.styling.px
+import it.pixiekevin.rocketengine.utils.addNext
+import it.pixiekevin.rocketengine.utils.asMediaItem
+import it.pixiekevin.rocketengine.utils.enqueue
+import it.pixiekevin.rocketengine.download.DownloadManager
+import it.pixiekevin.rocketengine.utils.forcePlay
+import it.pixiekevin.rocketengine.utils.formatAsDuration
+import it.pixiekevin.rocketengine.utils.medium
+import it.pixiekevin.rocketengine.utils.semiBold
+import it.pixiekevin.rocketengine.utils.thumbnail
 import kotlin.system.measureTimeMillis
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.withContext
+import kotlinx.coroutines.launch
 
 @ExperimentalAnimationApi
 @Composable
@@ -494,6 +496,96 @@ fun MediaItemMenu(
                     )
                 }
 
+                val downloadManager = remember { DownloadManager(context) }
+                var isDownloading by remember { mutableStateOf(false) }
+                var isShowingLocationDialog by remember { mutableStateOf(false) }
+                var selectedDownloadPath by remember { mutableStateOf(downloadManager.getDownloadPathPreference()) }
+
+                if (isShowingLocationDialog) {
+                    DefaultDialog(
+                        onDismiss = { isShowingLocationDialog = false }
+                    ) {
+                        val (_, typography) = LocalAppearance.current
+
+                        BasicText(
+                            text = "Select download location",
+                            style = typography.s.semiBold,
+                            modifier = Modifier
+                                .padding(vertical = 8.dp, horizontal = 24.dp)
+                        )
+
+                        it.pixiekevin.rocketengine.download.DownloadPath.entries.forEach { path ->
+                            MenuEntry(
+                                icon = R.drawable.folder,
+                                text = when (path) {
+                                    it.pixiekevin.rocketengine.download.DownloadPath.CACHE -> "App cache"
+                                    it.pixiekevin.rocketengine.download.DownloadPath.MUSIC -> "Music folder"
+                                    it.pixiekevin.rocketengine.download.DownloadPath.DOWNLOADS -> "Downloads folder"
+                                    it.pixiekevin.rocketengine.download.DownloadPath.CUSTOM -> "Custom path"
+                                },
+                                onClick = {
+                                    selectedDownloadPath = path
+                                    isShowingLocationDialog = false
+                                    isDownloading = true
+                                    onDismiss()
+                                    
+                                    val filename = "${mediaItem.mediaMetadata.title}_${mediaItem.mediaMetadata.artist}"
+                                        .replaceInvalidChars()
+                                    
+                                    kotlinx.coroutines.GlobalScope.launch(Dispatchers.IO) {
+                                        downloadManager.downloadAudio(
+                                            url = "https://music.youtube.com/watch?v=${mediaItem.mediaId}",
+                                            filename = filename,
+                                            downloadPath = selectedDownloadPath
+                                        )
+                                        isDownloading = false
+                                    }
+                                }
+                            )
+                        }
+
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceEvenly,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 16.dp)
+                        ) {
+                            DialogTextButton(
+                                text = "Cancel",
+                                onClick = { isShowingLocationDialog = false }
+                            )
+                        }
+                    }
+                }
+
+                MenuEntry(
+                    icon = R.drawable.download,
+                    text = if (isDownloading) "Downloading..." else "Download",
+                    isEnabled = !isDownloading,
+                    onClick = {
+                        if (isDownloading) return@MenuEntry
+                        
+                        if (downloadManager.getPromptForLocation()) {
+                            isShowingLocationDialog = true
+                        } else {
+                            isDownloading = true
+                            onDismiss()
+                            
+                            val filename = "${mediaItem.mediaMetadata.title}_${mediaItem.mediaMetadata.artist}"
+                                .replaceInvalidChars()
+                            
+                            kotlinx.coroutines.GlobalScope.launch(Dispatchers.IO) {
+                                downloadManager.downloadAudio(
+                                    url = "https://music.youtube.com/watch?v=${mediaItem.mediaId}",
+                                    filename = filename,
+                                    downloadPath = downloadManager.getDownloadPathPreference()
+                                )
+                                isDownloading = false
+                            }
+                        }
+                    }
+                )
+
                 onGoToEqualizer?.let { onGoToEqualizer ->
                     MenuEntry(
                         icon = R.drawable.equalizer,
@@ -732,4 +824,13 @@ fun MediaItemMenu(
             }
         }
     }
+}
+
+fun String.replaceInvalidChars(): String {
+    val invalidChars = arrayOf("/", "\\", ":", "*", "?", "\"", "<", ">", "|")
+    var result = this
+    invalidChars.forEach { char ->
+        result = result.replace(char, "_")
+    }
+    return result.trim()
 }

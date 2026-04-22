@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.service
+package it.pixiekevin.rocketengine.service
 
 import android.os.Binder as AndroidBinder
 import android.annotation.SuppressLint
@@ -67,45 +67,45 @@ import androidx.media3.exoplayer.source.MediaSource
 import androidx.media3.extractor.ExtractorsFactory
 import androidx.media3.extractor.mkv.MatroskaExtractor
 import androidx.media3.extractor.mp4.FragmentedMp4Extractor
-import it.vfsfitvnm.innertube.Innertube
-import it.vfsfitvnm.innertube.models.NavigationEndpoint
-import it.vfsfitvnm.innertube.models.bodies.PlayerBody
-import it.vfsfitvnm.innertube.requests.player
-import it.vfsfitvnm.vimusic.Database
-import it.vfsfitvnm.vimusic.MainActivity
-import it.vfsfitvnm.vimusic.R
-import it.vfsfitvnm.vimusic.enums.ExoPlayerDiskCacheMaxSize
-import it.vfsfitvnm.vimusic.models.Event
-import it.vfsfitvnm.vimusic.models.QueuedMediaItem
-import it.vfsfitvnm.vimusic.query
-import it.vfsfitvnm.vimusic.utils.InvincibleService
-import it.vfsfitvnm.vimusic.utils.RingBuffer
-import it.vfsfitvnm.vimusic.utils.TimerJob
-import it.vfsfitvnm.vimusic.utils.YouTubeRadio
-import it.vfsfitvnm.vimusic.utils.activityPendingIntent
-import it.vfsfitvnm.vimusic.utils.broadCastPendingIntent
-import it.vfsfitvnm.vimusic.utils.exoPlayerDiskCacheMaxSizeKey
-import it.vfsfitvnm.vimusic.utils.findNextMediaItemById
-import it.vfsfitvnm.vimusic.utils.forcePlayFromBeginning
-import it.vfsfitvnm.vimusic.utils.forceSeekToNext
-import it.vfsfitvnm.vimusic.utils.forceSeekToPrevious
-import it.vfsfitvnm.vimusic.utils.getEnum
-import it.vfsfitvnm.vimusic.utils.intent
-import it.vfsfitvnm.vimusic.utils.isAtLeastAndroid13
-import it.vfsfitvnm.vimusic.utils.isAtLeastAndroid6
-import it.vfsfitvnm.vimusic.utils.isAtLeastAndroid8
-import it.vfsfitvnm.vimusic.utils.isInvincibilityEnabledKey
-import it.vfsfitvnm.vimusic.utils.isShowingThumbnailInLockscreenKey
-import it.vfsfitvnm.vimusic.utils.mediaItems
-import it.vfsfitvnm.vimusic.utils.persistentQueueKey
-import it.vfsfitvnm.vimusic.utils.preferences
-import it.vfsfitvnm.vimusic.utils.queueLoopEnabledKey
-import it.vfsfitvnm.vimusic.utils.resumePlaybackWhenDeviceConnectedKey
-import it.vfsfitvnm.vimusic.utils.shouldBePlaying
-import it.vfsfitvnm.vimusic.utils.skipSilenceKey
-import it.vfsfitvnm.vimusic.utils.timer
-import it.vfsfitvnm.vimusic.utils.trackLoopEnabledKey
-import it.vfsfitvnm.vimusic.utils.volumeNormalizationKey
+import it.pixiekevin.innertube.Innertube
+import it.pixiekevin.innertube.models.NavigationEndpoint
+import it.pixiekevin.innertube.models.bodies.PlayerBody
+import it.pixiekevin.innertube.requests.player
+import it.pixiekevin.rocketengine.Database
+import it.pixiekevin.rocketengine.MainActivity
+import it.pixiekevin.rocketengine.R
+import it.pixiekevin.rocketengine.enums.ExoPlayerDiskCacheMaxSize
+import it.pixiekevin.rocketengine.models.Event
+import it.pixiekevin.rocketengine.models.QueuedMediaItem
+import it.pixiekevin.rocketengine.query
+import it.pixiekevin.rocketengine.utils.InvincibleService
+import it.pixiekevin.rocketengine.utils.RingBuffer
+import it.pixiekevin.rocketengine.utils.TimerJob
+import it.pixiekevin.rocketengine.utils.YouTubeRadio
+import it.pixiekevin.rocketengine.utils.activityPendingIntent
+import it.pixiekevin.rocketengine.utils.broadCastPendingIntent
+import it.pixiekevin.rocketengine.utils.exoPlayerDiskCacheMaxSizeKey
+import it.pixiekevin.rocketengine.utils.findNextMediaItemById
+import it.pixiekevin.rocketengine.utils.forcePlayFromBeginning
+import it.pixiekevin.rocketengine.utils.forceSeekToNext
+import it.pixiekevin.rocketengine.utils.forceSeekToPrevious
+import it.pixiekevin.rocketengine.utils.getEnum
+import it.pixiekevin.rocketengine.utils.intent
+import it.pixiekevin.rocketengine.utils.isAtLeastAndroid13
+import it.pixiekevin.rocketengine.utils.isAtLeastAndroid6
+import it.pixiekevin.rocketengine.utils.isAtLeastAndroid8
+import it.pixiekevin.rocketengine.utils.isInvincibilityEnabledKey
+import it.pixiekevin.rocketengine.utils.isShowingThumbnailInLockscreenKey
+import it.pixiekevin.rocketengine.utils.mediaItems
+import it.pixiekevin.rocketengine.utils.persistentQueueKey
+import it.pixiekevin.rocketengine.utils.preferences
+import it.pixiekevin.rocketengine.utils.queueLoopEnabledKey
+import it.pixiekevin.rocketengine.utils.resumePlaybackWhenDeviceConnectedKey
+import it.pixiekevin.rocketengine.utils.shouldBePlaying
+import it.pixiekevin.rocketengine.utils.skipSilenceKey
+import it.pixiekevin.rocketengine.utils.timer
+import it.pixiekevin.rocketengine.utils.trackLoopEnabledKey
+import it.pixiekevin.rocketengine.utils.volumeNormalizationKey
 import kotlin.math.roundToInt
 import kotlin.system.exitProcess
 import kotlinx.coroutines.CoroutineScope
@@ -791,7 +791,7 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
                                         mediaItem?.let(Database::insert)
 
                                         Database.insert(
-                                            it.vfsfitvnm.vimusic.models.Format(
+                                            it.pixiekevin.rocketengine.models.Format(
                                                 songId = videoId,
                                                 itag = format.itag,
                                                 mimeType = format.mimeType,
@@ -990,10 +990,10 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
             )
 
         companion object {
-            val pause = Action("it.vfsfitvnm.vimusic.pause")
-            val play = Action("it.vfsfitvnm.vimusic.play")
-            val next = Action("it.vfsfitvnm.vimusic.next")
-            val previous = Action("it.vfsfitvnm.vimusic.previous")
+            val pause = Action("it.pixiekevin.rocketengine.pause")
+            val play = Action("it.pixiekevin.rocketengine.play")
+            val next = Action("it.pixiekevin.rocketengine.next")
+            val previous = Action("it.pixiekevin.rocketengine.previous")
         }
     }
 

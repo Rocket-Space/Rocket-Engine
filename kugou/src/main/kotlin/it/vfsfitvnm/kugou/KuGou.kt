@@ -1,4 +1,4 @@
-package it.vfsfitvnm.kugou
+package it.pixiekevin.kugou
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -13,9 +13,9 @@ import io.ktor.http.ContentType
 import io.ktor.http.encodeURLParameter
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.util.decodeBase64String
-import it.vfsfitvnm.kugou.models.DownloadLyricsResponse
-import it.vfsfitvnm.kugou.models.SearchLyricsResponse
-import it.vfsfitvnm.kugou.models.SearchSongResponse
+import it.pixiekevin.kugou.models.DownloadLyricsResponse
+import it.pixiekevin.kugou.models.SearchLyricsResponse
+import it.pixiekevin.kugou.models.SearchSongResponse
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 

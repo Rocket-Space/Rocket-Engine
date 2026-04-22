@@ -1,4 +1,4 @@
-package it.vfsfitvnm.innertube.models
+package it.pixiekevin.innertube.models
 
 import kotlinx.serialization.Serializable
 

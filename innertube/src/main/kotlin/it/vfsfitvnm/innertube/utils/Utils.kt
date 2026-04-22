@@ -1,8 +1,8 @@
-package it.vfsfitvnm.innertube.utils
+package it.pixiekevin.innertube.utils
 
 import io.ktor.utils.io.CancellationException
-import it.vfsfitvnm.innertube.Innertube
-import it.vfsfitvnm.innertube.models.SectionListRenderer
+import it.pixiekevin.innertube.Innertube
+import it.pixiekevin.innertube.models.SectionListRenderer
 
 internal fun SectionListRenderer.findSectionByTitle(text: String): SectionListRenderer.Content? {
     return contents?.find { content ->

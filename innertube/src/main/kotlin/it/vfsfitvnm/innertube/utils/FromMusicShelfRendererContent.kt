@@ -1,8 +1,8 @@
-package it.vfsfitvnm.innertube.utils
+package it.pixiekevin.innertube.utils
 
-import it.vfsfitvnm.innertube.Innertube
-import it.vfsfitvnm.innertube.models.MusicShelfRenderer
-import it.vfsfitvnm.innertube.models.NavigationEndpoint
+import it.pixiekevin.innertube.Innertube
+import it.pixiekevin.innertube.models.MusicShelfRenderer
+import it.pixiekevin.innertube.models.NavigationEndpoint
 
 fun Innertube.SongItem.Companion.from(content: MusicShelfRenderer.Content): Innertube.SongItem? {
     val (mainRuns, otherRuns) = content.runs

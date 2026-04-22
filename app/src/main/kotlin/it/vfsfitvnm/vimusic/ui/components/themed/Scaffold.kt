@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.components.themed
+package it.pixiekevin.rocketengine.ui.components.themed
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedContentTransitionScope
@@ -7,15 +7,16 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.VisibilityThreshold
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.with
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.IntOffset
-import it.vfsfitvnm.vimusic.ui.styling.LocalAppearance
+import it.pixiekevin.rocketengine.ui.styling.LocalAppearance
 
 @ExperimentalAnimationApi
 @Composable
@@ -30,7 +31,7 @@ fun Scaffold(
 ) {
     val (colorPalette) = LocalAppearance.current
 
-    Row(
+    Column(
         modifier = modifier
             .background(colorPalette.background0)
             .fillMaxSize()
@@ -47,8 +48,8 @@ fun Scaffold(
             targetState = tabIndex,
             transitionSpec = {
                 val slideDirection = when (targetState > initialState) {
-                    true -> AnimatedContentTransitionScope.SlideDirection.Up
-                    false -> AnimatedContentTransitionScope.SlideDirection.Down
+                    true -> AnimatedContentTransitionScope.SlideDirection.Left
+                    false -> AnimatedContentTransitionScope.SlideDirection.Right
                 }
 
                 val animationSpec = spring(
@@ -57,10 +58,11 @@ fun Scaffold(
                     visibilityThreshold = IntOffset.VisibilityThreshold
                 )
 
-                slideIntoContainer(slideDirection, animationSpec) with
-                        slideOutOfContainer(slideDirection, animationSpec)
+                slideIntoContainer(slideDirection, animationSpec).togetherWith(
+                        slideOutOfContainer(slideDirection, animationSpec))
             },
-            content = content
+            content = content,
+            modifier = Modifier.weight(1f)
         )
     }
 }

@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.items
+package it.pixiekevin.rocketengine.ui.items
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import it.vfsfitvnm.vimusic.ui.styling.Dimensions
+import it.pixiekevin.rocketengine.ui.styling.Dimensions
 
 @Composable
 inline fun ItemContainer(

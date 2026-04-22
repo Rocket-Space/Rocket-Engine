@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.utils
+package it.pixiekevin.rocketengine.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable
@@ -7,7 +7,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import it.vfsfitvnm.vimusic.ui.styling.LocalAppearance
+import it.pixiekevin.rocketengine.ui.styling.LocalAppearance
 
 fun TextStyle.style(style: FontStyle) = copy(fontStyle = style)
 

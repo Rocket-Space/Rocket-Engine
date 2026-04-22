@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.service
+package it.pixiekevin.rocketengine.service
 
 import android.content.Context
 import android.content.res.Configuration
@@ -9,7 +9,7 @@ import androidx.core.graphics.applyCanvas
 import coil.imageLoader
 import coil.request.Disposable
 import coil.request.ImageRequest
-import it.vfsfitvnm.vimusic.utils.thumbnail
+import it.pixiekevin.rocketengine.utils.thumbnail
 
 context(Context)
 class BitmapProvider(

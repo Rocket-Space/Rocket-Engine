@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.screens.searchresult
+package it.pixiekevin.rocketengine.ui.screens.searchresult
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.Box
@@ -21,15 +21,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import it.vfsfitvnm.compose.persist.persist
-import it.vfsfitvnm.innertube.Innertube
-import it.vfsfitvnm.innertube.utils.plus
-import it.vfsfitvnm.vimusic.LocalPlayerAwareWindowInsets
-import it.vfsfitvnm.vimusic.ui.components.ShimmerHost
-import it.vfsfitvnm.vimusic.ui.components.themed.FloatingActionsContainerWithScrollToTop
-import it.vfsfitvnm.vimusic.ui.styling.LocalAppearance
-import it.vfsfitvnm.vimusic.utils.center
-import it.vfsfitvnm.vimusic.utils.secondary
+import it.pixiekevin.compose.persist.persist
+import it.pixiekevin.innertube.Innertube
+import it.pixiekevin.innertube.utils.plus
+import it.pixiekevin.rocketengine.LocalPlayerAwareWindowInsets
+import it.pixiekevin.rocketengine.ui.components.ShimmerHost
+import it.pixiekevin.rocketengine.ui.components.themed.FloatingActionsContainerWithScrollToTop
+import it.pixiekevin.rocketengine.ui.styling.LocalAppearance
+import it.pixiekevin.rocketengine.utils.center
+import it.pixiekevin.rocketengine.utils.secondary
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

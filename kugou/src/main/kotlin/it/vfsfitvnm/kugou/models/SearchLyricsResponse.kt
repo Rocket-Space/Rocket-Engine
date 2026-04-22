@@ -1,4 +1,4 @@
-package it.vfsfitvnm.kugou.models
+package it.pixiekevin.kugou.models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

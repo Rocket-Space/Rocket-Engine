@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.utils
+package it.pixiekevin.rocketengine.utils
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect

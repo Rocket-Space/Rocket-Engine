@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.items
+package it.pixiekevin.rocketengine.ui.items
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -19,15 +19,15 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.media3.common.MediaItem
 import coil.compose.AsyncImage
-import it.vfsfitvnm.vimusic.ui.components.themed.TextPlaceholder
-import it.vfsfitvnm.vimusic.ui.styling.LocalAppearance
-import it.vfsfitvnm.vimusic.ui.styling.shimmer
-import it.vfsfitvnm.vimusic.utils.medium
-import it.vfsfitvnm.vimusic.utils.secondary
-import it.vfsfitvnm.vimusic.utils.semiBold
-import it.vfsfitvnm.vimusic.utils.thumbnail
-import it.vfsfitvnm.innertube.Innertube
-import it.vfsfitvnm.vimusic.models.Song
+import it.pixiekevin.rocketengine.ui.components.themed.TextPlaceholder
+import it.pixiekevin.rocketengine.ui.styling.LocalAppearance
+import it.pixiekevin.rocketengine.ui.styling.shimmer
+import it.pixiekevin.rocketengine.utils.medium
+import it.pixiekevin.rocketengine.utils.secondary
+import it.pixiekevin.rocketengine.utils.semiBold
+import it.pixiekevin.rocketengine.utils.thumbnail
+import it.pixiekevin.innertube.Innertube
+import it.pixiekevin.rocketengine.models.Song
 
 @Composable
 fun SongItem(

@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.screens.artist
+package it.pixiekevin.rocketengine.ui.screens.artist
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -26,31 +26,31 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import it.vfsfitvnm.innertube.Innertube
-import it.vfsfitvnm.innertube.models.NavigationEndpoint
-import it.vfsfitvnm.vimusic.LocalPlayerAwareWindowInsets
-import it.vfsfitvnm.vimusic.LocalPlayerServiceBinder
-import it.vfsfitvnm.vimusic.R
-import it.vfsfitvnm.vimusic.ui.components.LocalMenuState
-import it.vfsfitvnm.vimusic.ui.components.ShimmerHost
-import it.vfsfitvnm.vimusic.ui.components.themed.FloatingActionsContainerWithScrollToTop
-import it.vfsfitvnm.vimusic.ui.components.themed.LayoutWithAdaptiveThumbnail
-import it.vfsfitvnm.vimusic.ui.components.themed.NonQueuedMediaItemMenu
-import it.vfsfitvnm.vimusic.ui.components.themed.SecondaryTextButton
-import it.vfsfitvnm.vimusic.ui.components.themed.TextPlaceholder
-import it.vfsfitvnm.vimusic.ui.items.AlbumItem
-import it.vfsfitvnm.vimusic.ui.items.AlbumItemPlaceholder
-import it.vfsfitvnm.vimusic.ui.items.SongItem
-import it.vfsfitvnm.vimusic.ui.items.SongItemPlaceholder
-import it.vfsfitvnm.vimusic.ui.styling.Dimensions
-import it.vfsfitvnm.vimusic.ui.styling.LocalAppearance
-import it.vfsfitvnm.vimusic.ui.styling.px
-import it.vfsfitvnm.vimusic.utils.align
-import it.vfsfitvnm.vimusic.utils.asMediaItem
-import it.vfsfitvnm.vimusic.utils.color
-import it.vfsfitvnm.vimusic.utils.forcePlay
-import it.vfsfitvnm.vimusic.utils.secondary
-import it.vfsfitvnm.vimusic.utils.semiBold
+import it.pixiekevin.innertube.Innertube
+import it.pixiekevin.innertube.models.NavigationEndpoint
+import it.pixiekevin.rocketengine.LocalPlayerAwareWindowInsets
+import it.pixiekevin.rocketengine.LocalPlayerServiceBinder
+import it.pixiekevin.rocketengine.R
+import it.pixiekevin.rocketengine.ui.components.LocalMenuState
+import it.pixiekevin.rocketengine.ui.components.ShimmerHost
+import it.pixiekevin.rocketengine.ui.components.themed.FloatingActionsContainerWithScrollToTop
+import it.pixiekevin.rocketengine.ui.components.themed.LayoutWithAdaptiveThumbnail
+import it.pixiekevin.rocketengine.ui.components.themed.NonQueuedMediaItemMenu
+import it.pixiekevin.rocketengine.ui.components.themed.SecondaryTextButton
+import it.pixiekevin.rocketengine.ui.components.themed.TextPlaceholder
+import it.pixiekevin.rocketengine.ui.items.AlbumItem
+import it.pixiekevin.rocketengine.ui.items.AlbumItemPlaceholder
+import it.pixiekevin.rocketengine.ui.items.SongItem
+import it.pixiekevin.rocketengine.ui.items.SongItemPlaceholder
+import it.pixiekevin.rocketengine.ui.styling.Dimensions
+import it.pixiekevin.rocketengine.ui.styling.LocalAppearance
+import it.pixiekevin.rocketengine.ui.styling.px
+import it.pixiekevin.rocketengine.utils.align
+import it.pixiekevin.rocketengine.utils.asMediaItem
+import it.pixiekevin.rocketengine.utils.color
+import it.pixiekevin.rocketengine.utils.forcePlay
+import it.pixiekevin.rocketengine.utils.secondary
+import it.pixiekevin.rocketengine.utils.semiBold
 
 @ExperimentalFoundationApi
 @ExperimentalAnimationApi

@@ -1,10 +1,10 @@
-package it.vfsfitvnm.vimusic.utils
+package it.pixiekevin.rocketengine.utils
 
 import androidx.media3.common.MediaItem
-import it.vfsfitvnm.innertube.Innertube
-import it.vfsfitvnm.innertube.models.bodies.ContinuationBody
-import it.vfsfitvnm.innertube.models.bodies.NextBody
-import it.vfsfitvnm.innertube.requests.nextPage
+import it.pixiekevin.innertube.Innertube
+import it.pixiekevin.innertube.models.bodies.ContinuationBody
+import it.pixiekevin.innertube.models.bodies.NextBody
+import it.pixiekevin.innertube.requests.nextPage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

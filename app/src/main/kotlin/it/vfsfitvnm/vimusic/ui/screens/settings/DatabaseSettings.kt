@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.screens.settings
+package it.pixiekevin.rocketengine.ui.screens.settings
 
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
@@ -20,16 +20,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import it.vfsfitvnm.vimusic.Database
-import it.vfsfitvnm.vimusic.LocalPlayerAwareWindowInsets
-import it.vfsfitvnm.vimusic.internal
-import it.vfsfitvnm.vimusic.path
-import it.vfsfitvnm.vimusic.query
-import it.vfsfitvnm.vimusic.service.PlayerService
-import it.vfsfitvnm.vimusic.ui.components.themed.Header
-import it.vfsfitvnm.vimusic.ui.styling.LocalAppearance
-import it.vfsfitvnm.vimusic.utils.intent
-import it.vfsfitvnm.vimusic.utils.toast
+import it.pixiekevin.rocketengine.Database
+import it.pixiekevin.rocketengine.LocalPlayerAwareWindowInsets
+import it.pixiekevin.rocketengine.internal
+import it.pixiekevin.rocketengine.path
+import it.pixiekevin.rocketengine.query
+import it.pixiekevin.rocketengine.service.PlayerService
+import it.pixiekevin.rocketengine.ui.components.themed.Header
+import it.pixiekevin.rocketengine.ui.styling.LocalAppearance
+import it.pixiekevin.rocketengine.utils.intent
+import it.pixiekevin.rocketengine.utils.toast
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -123,7 +123,7 @@ fun DatabaseSettings() {
                 val dateFormat = SimpleDateFormat("yyyyMMddHHmmss")
 
                 try {
-                    backupLauncher.launch("vimusic_${dateFormat.format(Date())}.db")
+                    backupLauncher.launch("rocketengine_${dateFormat.format(Date())}.db")
                 } catch (e: ActivityNotFoundException) {
                     context.toast("Couldn't find an application to create documents")
                 }

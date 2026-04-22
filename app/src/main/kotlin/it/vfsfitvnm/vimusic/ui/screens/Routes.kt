@@ -1,16 +1,16 @@
-package it.vfsfitvnm.vimusic.ui.screens
+package it.pixiekevin.rocketengine.ui.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.Composable
-import it.vfsfitvnm.compose.routing.Route0
-import it.vfsfitvnm.compose.routing.Route1
-import it.vfsfitvnm.compose.routing.RouteHandlerScope
-import it.vfsfitvnm.vimusic.enums.BuiltInPlaylist
-import it.vfsfitvnm.vimusic.ui.screens.album.AlbumScreen
-import it.vfsfitvnm.vimusic.ui.screens.artist.ArtistScreen
-import it.vfsfitvnm.vimusic.ui.screens.playlist.PlaylistScreen
+import it.pixiekevin.compose.routing.Route0
+import it.pixiekevin.compose.routing.Route1
+import it.pixiekevin.compose.routing.RouteHandlerScope
+import it.pixiekevin.rocketengine.enums.BuiltInPlaylist
+import it.pixiekevin.rocketengine.ui.screens.album.AlbumScreen
+import it.pixiekevin.rocketengine.ui.screens.artist.ArtistScreen
+import it.pixiekevin.rocketengine.ui.screens.playlist.PlaylistScreen
 
 val albumRoute = Route1<String?>("albumRoute")
 val artistRoute = Route1<String?>("artistRoute")

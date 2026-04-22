@@ -8,7 +8,7 @@ android {
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "it.vfsfitvnm.vimusic"
+        applicationId = "it.pixiekevin.rocketengine"
         minSdk = 21
         targetSdk = 34
         versionCode = 20
@@ -22,7 +22,7 @@ android {
         }
     }
 
-    namespace = "it.vfsfitvnm.vimusic"
+    namespace = "it.pixiekevin.rocketengine"
 
     buildTypes {
         debug {
@@ -111,6 +111,11 @@ dependencies {
 
     implementation(projects.innertube)
     implementation(projects.kugou)
+
+    implementation(libs.google.play.services.auth)
+    implementation(libs.google.api.services.youtube)
+    implementation(libs.google.api.client.android)
+    implementation(libs.google.http.client.gson)
 
     coreLibraryDesugaring(libs.desugaring)
 }

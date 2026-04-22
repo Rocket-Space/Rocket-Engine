@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.screens.player
+package it.pixiekevin.rocketengine.ui.screens.player
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateDp
@@ -35,23 +35,23 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.media3.common.C
 import androidx.media3.common.Player
-import it.vfsfitvnm.vimusic.Database
-import it.vfsfitvnm.vimusic.LocalPlayerServiceBinder
-import it.vfsfitvnm.vimusic.R
-import it.vfsfitvnm.vimusic.models.Song
-import it.vfsfitvnm.vimusic.query
-import it.vfsfitvnm.vimusic.ui.components.SeekBar
-import it.vfsfitvnm.vimusic.ui.components.themed.IconButton
-import it.vfsfitvnm.vimusic.ui.styling.LocalAppearance
-import it.vfsfitvnm.vimusic.ui.styling.favoritesIcon
-import it.vfsfitvnm.vimusic.utils.bold
-import it.vfsfitvnm.vimusic.utils.forceSeekToNext
-import it.vfsfitvnm.vimusic.utils.forceSeekToPrevious
-import it.vfsfitvnm.vimusic.utils.formatAsDuration
-import it.vfsfitvnm.vimusic.utils.rememberPreference
-import it.vfsfitvnm.vimusic.utils.secondary
-import it.vfsfitvnm.vimusic.utils.semiBold
-import it.vfsfitvnm.vimusic.utils.trackLoopEnabledKey
+import it.pixiekevin.rocketengine.Database
+import it.pixiekevin.rocketengine.LocalPlayerServiceBinder
+import it.pixiekevin.rocketengine.R
+import it.pixiekevin.rocketengine.models.Song
+import it.pixiekevin.rocketengine.query
+import it.pixiekevin.rocketengine.ui.components.SeekBar
+import it.pixiekevin.rocketengine.ui.components.themed.IconButton
+import it.pixiekevin.rocketengine.ui.styling.LocalAppearance
+import it.pixiekevin.rocketengine.ui.styling.favoritesIcon
+import it.pixiekevin.rocketengine.utils.bold
+import it.pixiekevin.rocketengine.utils.forceSeekToNext
+import it.pixiekevin.rocketengine.utils.forceSeekToPrevious
+import it.pixiekevin.rocketengine.utils.formatAsDuration
+import it.pixiekevin.rocketengine.utils.rememberPreference
+import it.pixiekevin.rocketengine.utils.secondary
+import it.pixiekevin.rocketengine.utils.semiBold
+import it.pixiekevin.rocketengine.utils.trackLoopEnabledKey
 import kotlinx.coroutines.flow.distinctUntilChanged
 
 @Composable

@@ -1,4 +1,4 @@
-package it.vfsfitvnm.vimusic.ui.screens.settings
+package it.pixiekevin.rocketengine.ui.screens.settings
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -20,17 +20,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import it.vfsfitvnm.vimusic.LocalPlayerAwareWindowInsets
-import it.vfsfitvnm.vimusic.LocalPlayerServiceBinder
-import it.vfsfitvnm.vimusic.ui.components.themed.Header
-import it.vfsfitvnm.vimusic.ui.styling.LocalAppearance
-import it.vfsfitvnm.vimusic.utils.isAtLeastAndroid6
-import it.vfsfitvnm.vimusic.utils.persistentQueueKey
-import it.vfsfitvnm.vimusic.utils.rememberPreference
-import it.vfsfitvnm.vimusic.utils.resumePlaybackWhenDeviceConnectedKey
-import it.vfsfitvnm.vimusic.utils.skipSilenceKey
-import it.vfsfitvnm.vimusic.utils.toast
-import it.vfsfitvnm.vimusic.utils.volumeNormalizationKey
+import it.pixiekevin.rocketengine.LocalPlayerAwareWindowInsets
+import it.pixiekevin.rocketengine.LocalPlayerServiceBinder
+import it.pixiekevin.rocketengine.ui.components.themed.Header
+import it.pixiekevin.rocketengine.ui.styling.LocalAppearance
+import it.pixiekevin.rocketengine.utils.isAtLeastAndroid6
+import it.pixiekevin.rocketengine.utils.persistentQueueKey
+import it.pixiekevin.rocketengine.utils.rememberPreference
+import it.pixiekevin.rocketengine.utils.resumePlaybackWhenDeviceConnectedKey
+import it.pixiekevin.rocketengine.utils.skipSilenceKey
+import it.pixiekevin.rocketengine.utils.toast
+import it.pixiekevin.rocketengine.utils.volumeNormalizationKey
 
 @ExperimentalAnimationApi
 @Composable
