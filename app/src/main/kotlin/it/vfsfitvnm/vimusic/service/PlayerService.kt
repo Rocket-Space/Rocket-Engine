@@ -857,12 +857,11 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
         return RenderersFactory { handler: Handler?, _, audioListener: AudioRendererEventListener?, _, _ ->
             arrayOf(
                 MediaCodecAudioRenderer(
-                    context = this,
-                    mediaCodecSelector = MediaCodecSelector.DEFAULT,
-                    handler = handler!!,
-                    eventListener = audioListener!!,
-                    audioSink = audioSink,
-                    enableDecoderFallback = false
+                    this,
+                    MediaCodecSelector.DEFAULT,
+                    handler!!,
+                    audioListener!!,
+                    audioSink
                 )
             )
         }
