@@ -30,17 +30,17 @@ val defaultStill = ContentTransform(
 )
 
 @ExperimentalAnimationApi
-inline val AnimatedContentScope<RouteHandlerScope>.isStacking: Boolean
+inline val AnimatedContentScope.isStacking: Boolean
     get() = initialState.route == null && targetState.route != null
 
 @ExperimentalAnimationApi
-inline val AnimatedContentScope<RouteHandlerScope>.isUnstacking: Boolean
+inline val AnimatedContentScope.isUnstacking: Boolean
     get() = initialState.route != null && targetState.route == null
 
 @ExperimentalAnimationApi
-inline val AnimatedContentScope<RouteHandlerScope>.isStill: Boolean
+inline val AnimatedContentScope.isStill: Boolean
     get() = initialState.route == null && targetState.route == null
 
 @ExperimentalAnimationApi
-inline val AnimatedContentScope<RouteHandlerScope>.isUnknown: Boolean
+inline val AnimatedContentScope.isUnknown: Boolean
     get() = initialState.route != null && targetState.route != null

@@ -21,7 +21,7 @@ fun RouteHandler(
     modifier: Modifier = Modifier,
     listenToGlobalEmitter: Boolean = false,
     handleBackPress: Boolean = true,
-    transitionSpec: AnimatedContentScope<RouteHandlerScope>.() -> ContentTransform = {
+    transitionSpec: AnimatedContentScope.() -> ContentTransform = {
         when {
             isStacking -> defaultStacking
             isStill -> defaultStill
@@ -53,7 +53,7 @@ fun RouteHandler(
     modifier: Modifier = Modifier,
     listenToGlobalEmitter: Boolean = false,
     handleBackPress: Boolean = true,
-    transitionSpec: AnimatedContentScope<RouteHandlerScope>.() -> ContentTransform = {
+    transitionSpec: AnimatedContentScope.() -> ContentTransform = {
         when {
             isStacking -> defaultStacking
             isStill -> defaultStill
