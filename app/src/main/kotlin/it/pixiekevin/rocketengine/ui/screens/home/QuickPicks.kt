@@ -54,6 +54,7 @@ import it.pixiekevin.rocketengine.ui.components.ShimmerHost
 import it.pixiekevin.rocketengine.ui.components.themed.FloatingActionsContainerWithScrollToTop
 import it.pixiekevin.rocketengine.ui.components.themed.Header
 import it.pixiekevin.rocketengine.ui.components.themed.NonQueuedMediaItemMenu
+import it.pixiekevin.rocketengine.ui.components.themed.SecondaryButton
 import it.pixiekevin.rocketengine.ui.components.themed.TextPlaceholder
 import it.pixiekevin.rocketengine.ui.items.AlbumItem
 import it.pixiekevin.rocketengine.ui.items.AlbumItemPlaceholder
@@ -318,14 +319,30 @@ fun QuickPicks(
                 }
 
                 Unit
-            } ?: relatedPageResult?.exceptionOrNull()?.let {
-                BasicText(
-                    text = "An error has occurred",
-                    style = typography.s.secondary.center,
+            } ?: relatedPageResult?.exceptionOrNull()?.let { error ->
+                Column(
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
-                        .padding(all = 16.dp)
-                )
+                        .padding(all = 16.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    BasicText(
+                        text = "An error has occurred",
+                        style = typography.s.secondary.center
+                    )
+                    BasicText(
+                        text = error.message ?: "Unknown error",
+                        style = typography.xs.secondary.center,
+                        modifier = Modifier.padding(top = 8.dp)
+                    )
+                    androidx.compose.foundation.layout.Spacer(modifier = Modifier.height(16.dp))
+                    it.pixiekevin.rocketengine.ui.components.themed.SecondaryButton(
+                        text = "Retry",
+                        onClick = {
+                            relatedPageResult = null
+                        }
+                    )
+                }
             } ?: ShimmerHost {
                 repeat(4) {
                     SongItemPlaceholder(
