@@ -4,6 +4,7 @@ import androidx.compose.foundation.gestures.FlingBehavior
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,7 +23,7 @@ internal fun ReorderingLazyList(
     verticalArrangement: Arrangement.Vertical? = null,
     verticalAlignment: Alignment.Vertical? = null,
     horizontalArrangement: Arrangement.Horizontal? = null,
-    content: Any
+    content: LazyListScope.() -> Unit
 ) {
     if (isVertical) {
         LazyColumn(
@@ -34,7 +35,7 @@ internal fun ReorderingLazyList(
             horizontalAlignment = horizontalAlignment ?: Alignment.Start,
             flingBehavior = flingBehavior,
             userScrollEnabled = userScrollEnabled,
-            content = content as @Composable () -> Unit
+            content = content
         )
     } else {
         LazyRow(
@@ -46,7 +47,7 @@ internal fun ReorderingLazyList(
             verticalAlignment = verticalAlignment ?: Alignment.Top,
             flingBehavior = flingBehavior,
             userScrollEnabled = userScrollEnabled,
-            content = content as @Composable () -> Unit
+            content = content
         )
     }
 }
