@@ -1,5 +1,3 @@
-@file:Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
-
 package it.vfsfitvnm.compose.reordering
 
 import androidx.compose.foundation.gestures.FlingBehavior

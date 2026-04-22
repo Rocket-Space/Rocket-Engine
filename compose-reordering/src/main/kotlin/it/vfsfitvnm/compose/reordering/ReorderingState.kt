@@ -1,12 +1,9 @@
-@file:Suppress("INVISIBLE_MEMBER", "INVISIBLE_REFERENCE")
-
 package it.vfsfitvnm.compose.reordering
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector1D
 import androidx.compose.animation.core.VectorConverter
 import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.lazy.LazyListBeyondBoundsInfo
 import androidx.compose.foundation.lazy.LazyListItemInfo
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
@@ -34,8 +31,6 @@ class ReorderingState(
     internal val onDragEnd: (Int, Int) -> Unit,
     private val extraItemCount: Int
 ) {
-    private lateinit var lazyListBeyondBoundsInfoInterval: LazyListBeyondBoundsInfo.Interval
-    internal val lazyListBeyondBoundsInfo = LazyListBeyondBoundsInfo()
     internal val offset = Animatable(0, Int.VectorConverter)
 
     internal var draggingIndex by mutableStateOf(-1)
@@ -72,9 +67,6 @@ class ReorderingState(
             lowerBound = -index * draggingItemSize,
             upperBound = (lastIndex - index) * draggingItemSize
         )
-
-        lazyListBeyondBoundsInfoInterval =
-            lazyListBeyondBoundsInfo.addInterval(index + extraItemCount, index + extraItemCount)
 
         val size =
             lazyListState.layoutInfo.viewportEndOffset - lazyListState.layoutInfo.viewportStartOffset
@@ -149,11 +141,10 @@ class ReorderingState(
         } else {
             val offsetInViewPort = targetOffset + itemInfo.offset - overscrolled
 
-            val topOverscroll = lazyListState.layoutInfo.viewportStartOffset +
-                    lazyListState.layoutInfo.beforeContentPadding - offsetInViewPort
+            val topOverscroll = lazyListState.layoutInfo.viewportStartOffset - offsetInViewPort
 
             val bottomOverscroll = lazyListState.layoutInfo.viewportEndOffset -
-                    lazyListState.layoutInfo.afterContentPadding - offsetInViewPort - itemInfo.size
+                    offsetInViewPort - itemInfo.size
 
             if (topOverscroll > 0) {
                 overscroll(topOverscroll)
@@ -180,14 +171,13 @@ class ReorderingState(
                 offset.snapTo(0)
             }
 
-            lazyListBeyondBoundsInfo.removeInterval(lazyListBeyondBoundsInfoInterval)
             animatablesPool = null
         }
     }
 
     private fun overscroll(overscroll: Int) {
-        lazyListState.dispatchRawDelta(-overscroll.toFloat())
         coroutineScope.launch {
+            lazyListState.scroll { scrollBy(-overscroll.toFloat()) }
             offset.snapTo(offset.value - overscroll)
         }
         overscrolled -= overscroll
