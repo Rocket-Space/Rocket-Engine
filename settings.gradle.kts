@@ -54,7 +54,7 @@ dependencyResolutionManagement {
 version("google-play-services", "21.1.1")
 library("google-play-services-auth", "com.google.android.gms", "play-services-auth").versionRef("google-play-services")
 
-version("google-api-services", "v3-rev20230817-2.0.0")
+version("google-api-services", "v3-rev20240417-2.0.0")
 library("google-api-services-youtube", "com.google.apis", "google-api-services-youtube").versionRef("google-api-services")
 library("google-api-client-android", "com.google.api-client", "google-api-client-android").version("2.2.0")
 library("google-http-client-gson", "com.google.http-client", "google-http-client-gson").version("1.43.3")
