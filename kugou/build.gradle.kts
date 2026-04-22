@@ -8,6 +8,11 @@ sourceSets.all {
     java.srcDir("src/$name/kotlin")
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
 dependencies {
     implementation(libs.kotlin.coroutines)
 
