@@ -123,13 +123,12 @@ dependencies {
     kapt(libs.room.compiler)
 
     implementation(projects.innertube)
-    // implementation(projects.kugou) // Remove if not using KuGou lyrics
+    implementation(projects.kugou)
 
-    // Remove Google dependencies if not using YouTube account features
-    // implementation(libs.google.play.services.auth)
-    // implementation(libs.google.api.services.youtube)
-    // implementation(libs.google.api.client.android)
-    // implementation(libs.google.http.client.gson)
+    implementation(libs.google.play.services.auth)
+    implementation(libs.google.api.services.youtube)
+    implementation(libs.google.api.client.android)
+    implementation(libs.google.http.client.gson)
 
     coreLibraryDesugaring(libs.desugaring)
 }

@@ -391,7 +391,33 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
     }
 
     private fun maybeRecoverPlaybackError() {
-        if (player.playerError != null) {
+        val error = player.playerError
+        if (error != null) {
+            val isHttpError = error.errorCode == PlaybackException.ERROR_CODE_IO_BAD_HTTP_STATUS ||
+                    error.cause?.message?.contains("403") == true ||
+                    error.cause?.message?.contains("404") == true
+
+            if (isHttpError) {
+                // Clear the cached URL for current item to force regeneration
+                val videoId = player.currentMediaItem?.mediaId
+                if (videoId != null) {
+                    // Remove from cache to force fresh URL fetch
+                    coroutineScope.launch(Dispatchers.IO) {
+                        try {
+                            // Remove cached data for this video
+                            cache.keys.forEach { key ->
+                                if (key.startsWith(videoId)) {
+                                    cache.removeResource(key)
+                                }
+                            }
+                        } catch (e: Exception) {
+                            // Ignore cache errors
+                        }
+                    }
+                }
+                // Small delay to allow cache clear
+                Thread.sleep(100)
+            }
             player.prepare()
         }
     }
