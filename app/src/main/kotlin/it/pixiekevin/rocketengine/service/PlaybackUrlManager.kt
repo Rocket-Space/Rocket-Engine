@@ -3,6 +3,7 @@ package it.pixiekevin.rocketengine.service
 import android.net.Uri
 import it.pixiekevin.innertube.Innertube
 import it.pixiekevin.innertube.models.bodies.PlayerBody
+import it.pixiekevin.innertube.requests.player as fetchPlayer
 import kotlinx.coroutines.*
 import java.util.concurrent.ConcurrentHashMap
 
@@ -104,7 +105,7 @@ class PlaybackUrlManager(private val coroutineScope: CoroutineScope) {
     
     private suspend fun fetchFreshUrl(videoId: String): Result<String> = withContext(Dispatchers.IO) {
         try {
-            val response = Innertube.player(PlayerBody(videoId = videoId))
+            val response = Innertube.fetchPlayer(PlayerBody(videoId = videoId))
                 .getOrThrow()
             
             if (response.playabilityStatus?.status != "OK") {
