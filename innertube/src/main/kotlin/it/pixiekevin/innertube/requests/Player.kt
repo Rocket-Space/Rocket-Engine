@@ -52,12 +52,16 @@ suspend fun Innertube.player(body: PlayerBody) = runCatchingNonCancellable {
         val audioStreams: List<AudioStream>
     )
 
-    // Instancias Piped públicas
+    // Instancias Piped públicas (más servidores = mejor disponibilidad)
     val pipedInstances = listOf(
         "https://pipedapi.adminforge.de",
         "https://api.piped.projectkodiak.com",
         "https://pipedapi.moomoo.me",
-        "https://pipedapi.nerdyfam.tech"
+        "https://pipedapi.nerdyfam.tech",
+        "https://api.piped.privacydev.net",
+        "https://pipedapi.drgns.space",
+        "https://pipedapi.drgns.space",
+        "https://api.piped.projectsegfault.com"
     )
 
     // Instancias Invidious públicas (más estables)
@@ -65,7 +69,11 @@ suspend fun Innertube.player(body: PlayerBody) = runCatchingNonCancellable {
         "https://iv.datura.network",
         "https://iv.nboeck.de",
         "https://iv.melmac.space",
-        "https://yt.artemislena.eu"
+        "https://yt.artemislena.eu",
+        "https://iv.nboeck.de",
+        "https://iv.datura.network",
+        "https://yt.odycdn.com",
+        "https://iv.melmac.space"
     )
 
     // Función para crear response con formato de audio
@@ -95,7 +103,8 @@ suspend fun Innertube.player(body: PlayerBody) = runCatchingNonCancellable {
     }
 
     // ===== MÉTODO 1: Intentar con Invidious (más estable) =====
-    for (instance in invidiousInstances.shuffled().take(2)) {
+    // Intentar con más instancias para mejor disponibilidad
+    for (instance in invidiousInstances.shuffled().take(4)) {
         try {
             val videoInfo = client.get("$instance/api/v1/videos/${body.videoId}") {
                 contentType(ContentType.Application.Json)
@@ -104,11 +113,14 @@ suspend fun Innertube.player(body: PlayerBody) = runCatchingNonCancellable {
             // Buscar formato de audio preferido (251 opus > 140 m4a)
             val allFormats = videoInfo.adaptiveFormats ?: videoInfo.formatStreams ?: emptyList()
             val audioFormats = allFormats.filter { 
-                it.mimeType.contains("audio/") || it.itag == "251" || it.itag == "140" 
+                it.mimeType.contains("audio/") || it.itag == "251" || it.itag == "140" || it.itag == "250" || it.itag == "249"
             }
 
+            // Prioridad: 251 (opus, mejor calidad) > 140 (m4a, universal) > otros
             val selectedFormat = audioFormats.find { it.itag == "251" }
                 ?: audioFormats.find { it.itag == "140" }
+                ?: audioFormats.find { it.itag == "250" }
+                ?: audioFormats.find { it.itag == "249" }
                 ?: audioFormats.firstOrNull()
 
             selectedFormat?.url?.let { url ->
@@ -121,7 +133,7 @@ suspend fun Innertube.player(body: PlayerBody) = runCatchingNonCancellable {
     }
 
     // ===== MÉTODO 2: Intentar con Piped =====
-    for (instance in pipedInstances.shuffled().take(2)) {
+    for (instance in pipedInstances.shuffled().take(4)) {
         try {
             val pipedData = client.get("$instance/streams/${body.videoId}") {
                 contentType(ContentType.Application.Json)

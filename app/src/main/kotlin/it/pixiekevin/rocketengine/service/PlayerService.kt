@@ -169,6 +169,7 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
         get() = NotificationId
 
     private lateinit var notificationActionReceiver: NotificationActionReceiver
+    private lateinit var playbackUrlManager: PlaybackUrlManager
 
     override fun onBind(intent: Intent?): AndroidBinder {
         super.onBind(intent)
@@ -186,6 +187,9 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
         )
 
         createNotificationChannel()
+
+        // Initialize proactive URL manager for stable playback
+        playbackUrlManager = PlaybackUrlManager(coroutineScope)
 
         preferences.registerOnSharedPreferenceChangeListener(this)
 
@@ -287,6 +291,11 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
         cache.release()
 
         loudnessEnhancer?.release()
+
+        // Clear URL cache to free memory
+        if (::playbackUrlManager.isInitialized) {
+            playbackUrlManager.clearCache()
+        }
 
         super.onDestroy()
     }
@@ -601,6 +610,26 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
                     .putLong(MediaMetadata.METADATA_KEY_DURATION, player.duration)
                     .build()
             )
+
+            // Pre-fetch next song URL when near end of current song (70% progress)
+            val progress = player.currentPosition.toFloat() / player.duration
+            if (progress > 0.7f && player.isPlaying) {
+                val nextIndex = player.currentMediaItemIndex + 1
+                if (nextIndex < player.mediaItemCount) {
+                    val nextVideoId = player.getMediaItemAt(nextIndex).mediaId
+                    if (nextVideoId.isNotEmpty()) {
+                        playbackUrlManager.preFetchUrl(nextVideoId)
+                    }
+                }
+            }
+
+            // Proactively refresh URL if approaching expiry during playback
+            val currentVideoId = player.currentMediaItem?.mediaId
+            if (currentVideoId != null && player.isPlaying && playbackUrlManager.needsRefresh(currentVideoId)) {
+                coroutineScope.launch {
+                    playbackUrlManager.getValidUrl(currentVideoId)
+                }
+            }
         }
 
         stateBuilder
@@ -775,89 +804,43 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
     }
 
     private fun createDataSourceFactory(): DataSource.Factory {
-        // Smaller chunks to force more frequent URL regeneration (helps with expiring URLs)
+        // Optimal chunk size for streaming (256KB balances speed and URL refresh frequency)
         val chunkLength = 256 * 1024L
-        val ringBuffer = RingBuffer<Triple<String, Uri, Long>?>(2) { null }
 
         return ResolvingDataSource.Factory(createCacheDataSource()) { dataSpec ->
             val videoId = dataSpec.key ?: error("A key must be set")
 
+            // If data is cached locally, use it directly
             if (cache.isCached(videoId, dataSpec.position, chunkLength)) {
-                dataSpec
-            } else {
-                // Check if we have a recent URL (less than 30 seconds old)
-                val cachedEntry = ringBuffer.find { it?.first == videoId }
-                val urlAge = cachedEntry?.third ?: 0L
-                val isExpired = System.currentTimeMillis() - urlAge > 30000 // 30 seconds
+                return@Factory dataSpec
+            }
 
-                if (cachedEntry != null && !isExpired) {
-                    dataSpec.withUri(cachedEntry.second)
-                } else {
-                    val urlResult = runBlocking(Dispatchers.IO) {
-                        Innertube.player(PlayerBody(videoId = videoId))
-                    }?.mapCatching { body ->
-                        if (body.videoDetails?.videoId != videoId) {
-                            throw VideoIdMismatchException()
-                        }
+            // Use PlaybackUrlManager for proactive URL management
+            val urlResult = runBlocking(Dispatchers.IO) {
+                playbackUrlManager.getValidUrl(videoId)
+            }
 
-                        when (val status = body.playabilityStatus?.status) {
-                            "OK" -> body.streamingData?.highestQualityFormat?.let { format ->
-                                val mediaItem = runBlocking(Dispatchers.Main) {
-                                    player.findNextMediaItemById(videoId)
-                                }
+            urlResult.fold(
+                onSuccess = { url ->
+                    dataSpec.withUri(url.toUri())
+                        .subrange(dataSpec.uriPositionOffset, chunkLength)
+                },
+                onFailure = { error ->
+                    // If normal fetch failed, try force refresh
+                    val refreshedUrl = runBlocking(Dispatchers.IO) {
+                        playbackUrlManager.forceRefreshUrl(videoId)
+                    }.getOrNull()
 
-                                if (mediaItem?.mediaMetadata?.extras?.getString("durationText") == null) {
-                                    format.approxDurationMs?.div(1000)
-                                        ?.let(DateUtils::formatElapsedTime)?.removePrefix("0")
-                                        ?.let { durationText ->
-                                            mediaItem?.mediaMetadata?.extras?.putString(
-                                                "durationText",
-                                                durationText
-                                            )
-                                            Database.updateDurationText(videoId, durationText)
-                                        }
-                                }
-
-                                query {
-                                    mediaItem?.let(Database::insert)
-
-                                    Database.insert(
-                                        it.pixiekevin.rocketengine.models.Format(
-                                            songId = videoId,
-                                            itag = format.itag,
-                                            mimeType = format.mimeType,
-                                            bitrate = format.bitrate,
-                                            loudnessDb = body.playerConfig?.audioConfig?.normalizedLoudnessDb,
-                                            contentLength = format.contentLength,
-                                            lastModified = format.lastModified
-                                        )
-                                    )
-                                }
-
-                                format.url
-                            } ?: throw PlayableFormatNotFoundException()
-
-                            "UNPLAYABLE" -> throw UnplayableException()
-                            "LOGIN_REQUIRED" -> throw LoginRequiredException()
-                            else -> throw PlaybackException(
-                                status,
-                                null,
-                                PlaybackException.ERROR_CODE_REMOTE_ERROR
-                            )
-                        }
-                    }
-
-                    urlResult?.getOrThrow()?.let { url ->
-                        ringBuffer.append(Triple(videoId, url.toUri(), System.currentTimeMillis()))
+                    refreshedUrl?.let { url ->
                         dataSpec.withUri(url.toUri())
                             .subrange(dataSpec.uriPositionOffset, chunkLength)
                     } ?: throw PlaybackException(
-                        null,
-                        urlResult?.exceptionOrNull(),
+                        "Failed to get stream URL",
+                        error,
                         PlaybackException.ERROR_CODE_REMOTE_ERROR
                     )
                 }
-            }
+            )
         }
     }
 
