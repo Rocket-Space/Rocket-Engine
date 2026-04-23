@@ -106,7 +106,8 @@ class PlaybackUrlManager(private val coroutineScope: CoroutineScope) {
     private suspend fun fetchFreshUrl(videoId: String): Result<String> = withContext(Dispatchers.IO) {
         try {
             val response = Innertube.fetchPlayer(PlayerBody(videoId = videoId))
-                .getOrThrow()
+                ?.getOrThrow()
+                ?: throw Exception("Failed to fetch player response")
             
             if (response.playabilityStatus?.status != "OK") {
                 return@withContext Result.failure(Exception("Video unplayable: ${response.playabilityStatus?.status}"))
