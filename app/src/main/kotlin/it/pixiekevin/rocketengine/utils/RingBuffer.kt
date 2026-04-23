@@ -8,4 +8,6 @@ class RingBuffer<T>(val size: Int, init: (index: Int) -> T) {
     fun getOrNull(index: Int): T? = list.getOrNull(index)
 
     fun append(element: T) = list.set(index++ % size, element)
+
+    fun find(predicate: (T) -> Boolean): T? = list.find(predicate)
 }
