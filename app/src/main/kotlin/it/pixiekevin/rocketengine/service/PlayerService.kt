@@ -96,6 +96,8 @@ import it.pixiekevin.rocketengine.utils.isAtLeastAndroid6
 import it.pixiekevin.rocketengine.utils.isAtLeastAndroid8
 import it.pixiekevin.rocketengine.utils.isInvincibilityEnabledKey
 import it.pixiekevin.rocketengine.utils.isShowingThumbnailInLockscreenKey
+import it.pixiekevin.rocketengine.utils.autoLoadMoreKey
+import it.pixiekevin.rocketengine.utils.autoSkipOnErrorKey
 import it.pixiekevin.rocketengine.utils.mediaItems
 import it.pixiekevin.rocketengine.utils.persistentQueueKey
 import it.pixiekevin.rocketengine.utils.preferences
@@ -155,6 +157,10 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
     private var isPersistentQueueEnabled = false
     private var isShowingThumbnailInLockscreen = true
     override var isInvincibilityEnabled = false
+    private var isAutoLoadMoreEnabled = true
+    private var isAutoSkipOnErrorEnabled = true
+    private var consecutiveErrors = 0
+    private val maxConsecutiveErrors = 3
 
     private var audioManager: AudioManager? = null
     private var audioDeviceCallback: AudioDeviceCallback? = null
@@ -198,6 +204,8 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
         isInvincibilityEnabled = preferences.getBoolean(isInvincibilityEnabledKey, false)
         isShowingThumbnailInLockscreen =
             preferences.getBoolean(isShowingThumbnailInLockscreenKey, false)
+        isAutoLoadMoreEnabled = preferences.getBoolean(autoLoadMoreKey, true)
+        isAutoSkipOnErrorEnabled = preferences.getBoolean(autoSkipOnErrorKey, true)
 
         val cacheEvictor = when (val size =
             preferences.getEnum(exoPlayerDiskCacheMaxSizeKey, ExoPlayerDiskCacheMaxSize.`2GB`)) {
@@ -402,9 +410,36 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
     private fun maybeRecoverPlaybackError() {
         val error = player.playerError
         if (error != null) {
+            consecutiveErrors++
+
             val isHttpError = error.errorCode == PlaybackException.ERROR_CODE_IO_BAD_HTTP_STATUS ||
                     error.cause?.message?.contains("403") == true ||
                     error.cause?.message?.contains("404") == true
+
+            // MetroList-style auto-skip: if too many consecutive errors, skip to next song
+            if (isAutoSkipOnErrorEnabled && consecutiveErrors >= maxConsecutiveErrors) {
+                consecutiveErrors = 0
+                // Clear cache and skip to next song
+                val videoId = player.currentMediaItem?.mediaId
+                if (videoId != null) {
+                    coroutineScope.launch(Dispatchers.IO) {
+                        try {
+                            playbackUrlManager.forceRefreshUrl(videoId)
+                            cache.keys.forEach { key ->
+                                if (key.startsWith(videoId)) {
+                                    cache.removeResource(key)
+                                }
+                            }
+                        } catch (e: Exception) {
+                            // Ignore cache errors
+                        }
+                    }
+                }
+                // Skip to next song after a small delay
+                Thread.sleep(200)
+                player.forceSeekToNext()
+                return
+            }
 
             if (isHttpError) {
                 // Clear the cached URL for current item to force regeneration
@@ -413,7 +448,7 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
                     // Remove from cache to force fresh URL fetch
                     coroutineScope.launch(Dispatchers.IO) {
                         try {
-                            // Remove cached data for this video
+                            playbackUrlManager.forceRefreshUrl(videoId)
                             cache.keys.forEach { key ->
                                 if (key.startsWith(videoId)) {
                                     cache.removeResource(key)
@@ -428,14 +463,30 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
                 Thread.sleep(100)
             }
             player.prepare()
+        } else {
+            // Reset error counter when playback succeeds
+            consecutiveErrors = 0
         }
     }
 
     private fun maybeProcessRadio() {
+        if (!isAutoLoadMoreEnabled) return
+
         radio?.let { radio ->
-            if (player.mediaItemCount - player.currentMediaItemIndex <= 3) {
+            // MetroList-style aggressive auto-loading: load when ≤ 5 items remain
+            val remainingItems = player.mediaItemCount - player.currentMediaItemIndex
+            if (remainingItems <= 5) {
                 coroutineScope.launch(Dispatchers.Main) {
-                    player.addMediaItems(radio.process())
+                    try {
+                        val newItems = radio.process()
+                        if (newItems.isNotEmpty()) {
+                            player.addMediaItems(newItems)
+                            // Reset error counter on successful load
+                            consecutiveErrors = 0
+                        }
+                    } catch (e: Exception) {
+                        // Silently fail - will retry on next song transition
+                    }
                 }
             }
         }
@@ -699,6 +750,12 @@ class PlayerService : InvincibleService(), Player.Listener, PlaybackStatsListene
                     else -> Player.REPEAT_MODE_OFF
                 }
             }
+
+            autoLoadMoreKey -> isAutoLoadMoreEnabled =
+                sharedPreferences.getBoolean(key, isAutoLoadMoreEnabled)
+
+            autoSkipOnErrorKey -> isAutoSkipOnErrorEnabled =
+                sharedPreferences.getBoolean(key, isAutoSkipOnErrorEnabled)
         }
     }
 
