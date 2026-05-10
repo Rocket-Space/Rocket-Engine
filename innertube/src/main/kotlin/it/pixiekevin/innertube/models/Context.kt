@@ -27,7 +27,7 @@ data class Context(
         val DefaultWeb = Context(
             client = Client(
                 clientName = "WEB_REMIX",
-                clientVersion = "1.20220918",
+                clientVersion = "1.20250122",
                 platform = "DESKTOP",
             )
         )
@@ -35,10 +35,10 @@ data class Context(
         val DefaultAndroid = Context(
             client = Client(
                 clientName = "ANDROID_MUSIC",
-                clientVersion = "5.28.1",
+                clientVersion = "7.28.52",
                 platform = "MOBILE",
-                androidSdkVersion = 30,
-                userAgent = "com.google.android.apps.youtube.music/5.28.1 (Linux; U; Android 11) gzip"
+                androidSdkVersion = 34,
+                userAgent = "com.google.android.apps.youtube.music/7.28.52 (Linux; U; Android 14) gzip"
             )
         )
 
@@ -53,9 +53,9 @@ data class Context(
         val DefaultIOS = Context(
             client = Client(
                 clientName = "IOS",
-                clientVersion = "19.29.1",
+                clientVersion = "20.05.3",
                 platform = "MOBILE",
-                userAgent = "com.google.ios.youtube/19.29.1 (iPhone; CPU iPhone OS 17_5_1 like Mac OS X)"
+                userAgent = "com.google.ios.youtube/20.05.3 (iPhone; CPU iPhone OS 18_1 like Mac OS X)"
             )
         )
     }
